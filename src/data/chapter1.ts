@@ -12,22 +12,21 @@ export const questionsChapter1: Question[] = [
       "Testing is done only by users; debugging by managers",
     ],
     correctAnswer: 1,
-    explanation: "Testing reveals defects/failures; debugging locates root causes and implements fixes.",
-    explanationVN: "Testing phát hiện defect/failure; debugging tìm nguyên nhân gốc rễ và sửa lỗi.",
+    explanation:
+      "Testing reveals defects/failures; debugging locates root causes and implements fixes.",
+    explanationVN:
+      "Testing phát hiện defect/failure; debugging tìm nguyên nhân gốc rễ và sửa lỗi.",
   },
   {
     id: "f791def4-ebb4-4c02-a8db-cb569a1a64d6",
     chapter: 1,
     question: "Who typically performs debugging in a project?",
-    options: [
-      "Testers",
-      "Developers",
-      "End users",
-      "Product owners",
-    ],
+    options: ["Testers", "Developers", "End users", "Product owners"],
     correctAnswer: 1,
-    explanation: "Debugging is primarily a developer activity (though anyone can report defects).",
-    explanationVN: "Debugging chủ yếu do lập trình viên thực hiện (dù ai cũng có thể báo defect).",
+    explanation:
+      "Debugging is primarily a developer activity (though anyone can report defects).",
+    explanationVN:
+      "Debugging chủ yếu do lập trình viên thực hiện (dù ai cũng có thể báo defect).",
   },
   {
     id: "794a038d-7a91-47a1-bae9-f808baf0ef9a",
@@ -40,8 +39,10 @@ export const questionsChapter1: Question[] = [
       "Debugging replaces validation",
     ],
     correctAnswer: 1,
-    explanation: "Even without known defects, a product fails if it does not satisfy user/business needs.",
-    explanationVN: "Dù không còn bug đã biết, sản phẩm vẫn thất bại nếu không đáp ứng nhu cầu người dùng/kinh doanh.",
+    explanation:
+      "Even without known defects, a product fails if it does not satisfy user/business needs.",
+    explanationVN:
+      "Dù không còn bug đã biết, sản phẩm vẫn thất bại nếu không đáp ứng nhu cầu người dùng/kinh doanh.",
   },
   {
     id: "028918de-70d8-47c7-9e7f-f3a81654c33f",
@@ -54,8 +55,10 @@ export const questionsChapter1: Question[] = [
       "Defect is caused by users only",
     ],
     correctAnswer: 0,
-    explanation: "Error (human mistake) → Defect (flaw) → Failure (observed deviation when executed).",
-    explanationVN: "Error (lỗi do người) → Defect (lỗi trong tạo phẩm) → Failure (lệch quan sát khi chạy).",
+    explanation:
+      "Error (human mistake) → Defect (flaw) → Failure (observed deviation when executed).",
+    explanationVN:
+      "Error (lỗi do người) → Defect (lỗi trong tạo phẩm) → Failure (lệch quan sát khi chạy).",
   },
   {
     id: "2399fae7-667a-4892-aecd-0daca32ce5be",
@@ -68,8 +71,10 @@ export const questionsChapter1: Question[] = [
       "Because it's illegal",
     ],
     correctAnswer: 1,
-    explanation: "Too many input/environment combinations; use risk-based prioritization.",
-    explanationVN: "Quá nhiều tổ hợp đầu vào/môi trường; cần ưu tiên theo rủi ro/giá trị.",
+    explanation:
+      "Too many input/environment combinations; use risk-based prioritization.",
+    explanationVN:
+      "Quá nhiều tổ hợp đầu vào/môi trường; cần ưu tiên theo rủi ro/giá trị.",
   },
   {
     id: "c20eb0b8-1abc-4a80-9ae8-60bb7a4e6efc",
@@ -82,8 +87,10 @@ export const questionsChapter1: Question[] = [
       "Avoids writing tests",
     ],
     correctAnswer: 1,
-    explanation: "Finding issues earlier reduces fix cost/time and speeds feedback.",
-    explanationVN: "Phát hiện sớm giảm chi phí/thời gian sửa và tăng tốc phản hồi.",
+    explanation:
+      "Finding issues earlier reduces fix cost/time and speeds feedback.",
+    explanationVN:
+      "Phát hiện sớm giảm chi phí/thời gian sửa và tăng tốc phản hồi.",
   },
   {
     id: "d3fcdf2a-f17d-42a8-8ff4-79a889534c8a",
@@ -96,8 +103,10 @@ export const questionsChapter1: Question[] = [
       "Only UI has defects",
     ],
     correctAnswer: 1,
-    explanation: "A small number of modules often contain most defects (Pareto 80/20).",
-    explanationVN: "Một số ít module thường chứa phần lớn defect (Pareto 80/20).",
+    explanation:
+      "A small number of modules often contain most defects (Pareto 80/20).",
+    explanationVN:
+      "Một số ít module thường chứa phần lớn defect (Pareto 80/20).",
   },
   {
     id: "fc05ae6a-2472-4042-a89f-65f3ed756192",
@@ -110,8 +119,10 @@ export const questionsChapter1: Question[] = [
       "Exploratory testing is useless",
     ],
     correctAnswer: 1,
-    explanation: "Unchanged tests lose effectiveness; refresh cases and data to find new defects.",
-    explanationVN: "Bộ test không đổi kém hiệu quả dần; làm mới case và dữ liệu để tìm defect mới.",
+    explanation:
+      "Unchanged tests lose effectiveness; refresh cases and data to find new defects.",
+    explanationVN:
+      "Bộ test không đổi kém hiệu quả dần; làm mới case và dữ liệu để tìm defect mới.",
   },
   {
     id: "6da1e036-4e24-472c-95dd-6fdd4b6f1cfd",
@@ -124,13 +135,16 @@ export const questionsChapter1: Question[] = [
       "Back-end and front-end testing are identical",
     ],
     correctAnswer: 1,
-    explanation: "Domains (safety-critical vs. e-commerce) require different strategies and rigor.",
-    explanationVN: "Các lĩnh vực (an toàn vs. thương mại) cần chiến lược và độ nghiêm khác nhau.",
+    explanation:
+      "Domains (safety-critical vs. e-commerce) require different strategies and rigor.",
+    explanationVN:
+      "Các lĩnh vực (an toàn vs. thương mại) cần chiến lược và độ nghiêm khác nhau.",
   },
   {
     id: "c1d69eb4-8fc9-4e33-8661-feffdf072357",
     chapter: 1,
-    question: "Which is the key message of 'Testing shows presence, not absence of defects'?",
+    question:
+      "Which is the key message of 'Testing shows presence, not absence of defects'?",
     options: [
       "Testing proves zero defects exist",
       "Testing reduces risk by revealing defects but cannot guarantee zero defects",
@@ -138,8 +152,10 @@ export const questionsChapter1: Question[] = [
       "Testing removes the need for monitoring",
     ],
     correctAnswer: 1,
-    explanation: "Testing lowers risk by revealing defects; it cannot prove defect-free status.",
-    explanationVN: "Testing giảm rủi ro bằng cách lộ defect; không thể chứng minh không còn defect.",
+    explanation:
+      "Testing lowers risk by revealing defects; it cannot prove defect-free status.",
+    explanationVN:
+      "Testing giảm rủi ro bằng cách lộ defect; không thể chứng minh không còn defect.",
   },
   {
     id: "0fdeb768-a121-4685-be19-34db7d9411cb",
@@ -152,8 +168,10 @@ export const questionsChapter1: Question[] = [
       "QC always precedes QA",
     ],
     correctAnswer: 1,
-    explanation: "QA: process & preventive. QC: product & detective; testing is part of QC.",
-    explanationVN: "QA: quy trình & phòng ngừa. QC: sản phẩm & phát hiện; testing thuộc QC.",
+    explanation:
+      "QA: process & preventive. QC: product & detective; testing is part of QC.",
+    explanationVN:
+      "QA: quy trình & phòng ngừa. QC: sản phẩm & phát hiện; testing thuộc QC.",
   },
   {
     id: "2db31d77-6915-410b-a3d8-b406288c1179",
@@ -166,8 +184,10 @@ export const questionsChapter1: Question[] = [
       "Help desk shifts",
     ],
     correctAnswer: 1,
-    explanation: "Test plan outlines scope, objectives, approach, resourcing, schedule, risks, and exit criteria.",
-    explanationVN: "Test plan nêu phạm vi, mục tiêu, cách tiếp cận, nguồn lực, lịch, rủi ro, và tiêu chí thoát.",
+    explanation:
+      "Test plan outlines scope, objectives, approach, resourcing, schedule, risks, and exit criteria.",
+    explanationVN:
+      "Test plan nêu phạm vi, mục tiêu, cách tiếp cận, nguồn lực, lịch, rủi ro, và tiêu chí thoát.",
   },
   {
     id: "67d824b7-ddc4-42c9-b9d0-287908bced5f",
@@ -180,8 +200,10 @@ export const questionsChapter1: Question[] = [
       "Refactor the architecture",
     ],
     correctAnswer: 1,
-    explanation: "Test analysis answers 'what to test' (conditions) based on requirements and risks.",
-    explanationVN: "Phân tích kiểm thử trả lời 'test cái gì' dựa trên yêu cầu và rủi ro.",
+    explanation:
+      "Test analysis answers 'what to test' (conditions) based on requirements and risks.",
+    explanationVN:
+      "Phân tích kiểm thử trả lời 'test cái gì' dựa trên yêu cầu và rủi ro.",
   },
   {
     id: "1ffd069e-647a-4938-9657-ebc743ca3b87",
@@ -194,8 +216,10 @@ export const questionsChapter1: Question[] = [
       "Close sprint retrospective",
     ],
     correctAnswer: 1,
-    explanation: "Test design answers 'how to test': designing cases, data, and environment.",
-    explanationVN: "Thiết kế kiểm thử trả lời 'test như thế nào': thiết kế case, dữ liệu, và môi trường.",
+    explanation:
+      "Test design answers 'how to test': designing cases, data, and environment.",
+    explanationVN:
+      "Thiết kế kiểm thử trả lời 'test như thế nào': thiết kế case, dữ liệu, và môi trường.",
   },
   {
     id: "ab516190-fbce-4168-879b-8ba807b03a2a",
@@ -208,8 +232,10 @@ export const questionsChapter1: Question[] = [
       "Write user manuals only",
     ],
     correctAnswer: 1,
-    explanation: "Implementation organizes procedures/suites and prepares environment and data.",
-    explanationVN: "Triển khai tổ chức quy trình/suite và chuẩn bị môi trường và dữ liệu.",
+    explanation:
+      "Implementation organizes procedures/suites and prepares environment and data.",
+    explanationVN:
+      "Triển khai tổ chức quy trình/suite và chuẩn bị môi trường và dữ liệu.",
   },
   {
     id: "e82536d3-ae96-49e7-a261-dc6f310dff66",
@@ -222,8 +248,10 @@ export const questionsChapter1: Question[] = [
       "Legal audit",
     ],
     correctAnswer: 1,
-    explanation: "Execution runs tests, logs outcomes, compares expected vs actual, and raises defects.",
-    explanationVN: "Thực thi chạy test, ghi kết quả, so sánh expected vs actual và báo defect.",
+    explanation:
+      "Execution runs tests, logs outcomes, compares expected vs actual, and raises defects.",
+    explanationVN:
+      "Thực thi chạy test, ghi kết quả, so sánh expected vs actual và báo defect.",
   },
   {
     id: "1abf68c2-8ba2-4b80-b19a-c3ff0b7c708d",
@@ -236,8 +264,10 @@ export const questionsChapter1: Question[] = [
       "Daily stand-up meeting",
     ],
     correctAnswer: 1,
-    explanation: "Completion archives testware, reports outcomes, and gathers lessons learned.",
-    explanationVN: "Hoàn tất lưu trữ testware, báo cáo kết quả và đúc kết bài học.",
+    explanation:
+      "Completion archives testware, reports outcomes, and gathers lessons learned.",
+    explanationVN:
+      "Hoàn tất lưu trữ testware, báo cáo kết quả và đúc kết bài học.",
   },
   {
     id: "ec8c84c8-ca15-453a-a3d5-f98aeedc10d6",
@@ -250,8 +280,10 @@ export const questionsChapter1: Question[] = [
       "All commits squashed into one",
     ],
     correctAnswer: 1,
-    explanation: "Exit criteria are measurable thresholds (coverage and severity) and critical test completion.",
-    explanationVN: "Tiêu chí thoát là ngưỡng đo lường (coverage và mức nghiêm trọng) và hoàn tất test quan trọng.",
+    explanation:
+      "Exit criteria are measurable thresholds (coverage and severity) and critical test completion.",
+    explanationVN:
+      "Tiêu chí thoát là ngưỡng đo lường (coverage và mức nghiêm trọng) và hoàn tất test quan trọng.",
   },
   {
     id: "63beca4b-ff81-477e-89b8-629b8b87ddae",
@@ -264,7 +296,8 @@ export const questionsChapter1: Question[] = [
       "Manual UI testing run",
     ],
     correctAnswer: 1,
-    explanation: "Static testing reviews work products without executing the software.",
+    explanation:
+      "Static testing reviews work products without executing the software.",
     explanationVN: "Kiểm tra tĩnh review tạo phẩm mà không chạy phần mềm.",
   },
   {
@@ -278,8 +311,10 @@ export const questionsChapter1: Question[] = [
       "Process audit",
     ],
     correctAnswer: 2,
-    explanation: "Dynamic testing executes software and compares actual vs expected behavior.",
-    explanationVN: "Kiểm tra động chạy phần mềm và so sánh actual với expected.",
+    explanation:
+      "Dynamic testing executes software and compares actual vs expected behavior.",
+    explanationVN:
+      "Kiểm tra động chạy phần mềm và so sánh actual với expected.",
   },
   {
     id: "4063e743-3e29-480b-a54b-93bbed5640ee",
@@ -292,13 +327,16 @@ export const questionsChapter1: Question[] = [
       "Failures happen only in production environment",
     ],
     correctAnswer: 1,
-    explanation: "A defect may not manifest as a failure under certain conditions; failures result from execution.",
-    explanationVN: "Một defect có thể không gây ra failure nếu điều kiện thực thi khác; failure xuất hiện trong thực thi.",
+    explanation:
+      "A defect may not manifest as a failure under certain conditions; failures result from execution.",
+    explanationVN:
+      "Một defect có thể không gây ra failure nếu điều kiện thực thi khác; failure xuất hiện trong thực thi.",
   },
   {
     id: "952d7827-545c-4f14-9094-fe8002dce40e",
     chapter: 1,
-    question: "In which testing activity would you typically find a requirement ambiguity?",
+    question:
+      "In which testing activity would you typically find a requirement ambiguity?",
     options: [
       "Test Execution phase",
       "Test Analysis phase",
@@ -306,8 +344,10 @@ export const questionsChapter1: Question[] = [
       "During production debugging",
     ],
     correctAnswer: 1,
-    explanation: "Test Analysis (what to test) derives conditions from requirements, revealing ambiguities.",
-    explanationVN: "Phân tích Test (test cái gì) lấy điều kiện từ yêu cầu, lộ ra sự mơ hồ.",
+    explanation:
+      "Test Analysis (what to test) derives conditions from requirements, revealing ambiguities.",
+    explanationVN:
+      "Phân tích Test (test cái gì) lấy điều kiện từ yêu cầu, lộ ra sự mơ hồ.",
   },
   {
     id: "ab326027-2a1a-4983-ad74-4c932cf8f401",
@@ -320,8 +360,10 @@ export const questionsChapter1: Question[] = [
       "Developers never review code",
     ],
     correctAnswer: 1,
-    explanation: "Testers use different techniques, perspectives, and may test paths developers didn't anticipate.",
-    explanationVN: "Tester dùng kỹ thuật khác, quan điểm khác và thử các đường developer không dự tính.",
+    explanation:
+      "Testers use different techniques, perspectives, and may test paths developers didn't anticipate.",
+    explanationVN:
+      "Tester dùng kỹ thuật khác, quan điểm khác và thử các đường developer không dự tính.",
   },
   {
     id: "12e366c5-f785-4360-8857-c9d0246ed084",
@@ -334,13 +376,16 @@ export const questionsChapter1: Question[] = [
       "Avoiding low-risk areas completely",
     ],
     correctAnswer: 1,
-    explanation: "Risk-based testing focuses effort on areas with high probability×impact to optimize coverage.",
-    explanationVN: "Test dựa rủi ro tập trung nỗ lực vào khu vực có xác suất×tác động cao để tối ưu coverage.",
+    explanation:
+      "Risk-based testing focuses effort on areas with high probability×impact to optimize coverage.",
+    explanationVN:
+      "Test dựa rủi ro tập trung nỗ lực vào khu vực có xác suất×tác động cao để tối ưu coverage.",
   },
   {
     id: "a077bece-0405-4aea-9fc9-51e9083d038c",
     chapter: 1,
-    question: "Which testing type focuses on verifying non-functional requirements?",
+    question:
+      "Which testing type focuses on verifying non-functional requirements?",
     options: [
       "Functional testing",
       "Performance, security, usability, and compatibility testing",
@@ -348,8 +393,10 @@ export const questionsChapter1: Question[] = [
       "System integration testing",
     ],
     correctAnswer: 1,
-    explanation: "Non-functional testing covers performance, security, usability, reliability, etc.",
-    explanationVN: "Test non-functional bao gồm hiệu suất, bảo mật, khả dụng, độ tin cậy, v.v.",
+    explanation:
+      "Non-functional testing covers performance, security, usability, reliability, etc.",
+    explanationVN:
+      "Test non-functional bao gồm hiệu suất, bảo mật, khả dụng, độ tin cậy, v.v.",
   },
   {
     id: "146120e0-ff37-45d0-b2da-53d3e44d1a6c",
@@ -362,8 +409,10 @@ export const questionsChapter1: Question[] = [
       "Confirmation is manual only; regression is automated only",
     ],
     correctAnswer: 1,
-    explanation: "Confirmation: verify fix works. Regression: ensure previously passing tests still pass.",
-    explanationVN: "Xác nhận: kiểm chứng fix hoạt động. Hồi quy: đảm bảo các test đã pass vẫn pass.",
+    explanation:
+      "Confirmation: verify fix works. Regression: ensure previously passing tests still pass.",
+    explanationVN:
+      "Xác nhận: kiểm chứng fix hoạt động. Hồi quy: đảm bảo các test đã pass vẫn pass.",
   },
   {
     id: "235844c3-6721-4e02-8317-e7b62a304071",
@@ -376,8 +425,10 @@ export const questionsChapter1: Question[] = [
       "To estimate project budget",
     ],
     correctAnswer: 1,
-    explanation: "Traceability matrix ensures requirements are covered by tests and links defects to requirements.",
-    explanationVN: "Ma trận traceability đảm bảo yêu cầu được cover bởi test và liên kết defect với yêu cầu.",
+    explanation:
+      "Traceability matrix ensures requirements are covered by tests and links defects to requirements.",
+    explanationVN:
+      "Ma trận traceability đảm bảo yêu cầu được cover bởi test và liên kết defect với yêu cầu.",
   },
   {
     id: "5fdaf9ad-46a7-4305-81e3-d60ae415607a",
@@ -390,8 +441,10 @@ export const questionsChapter1: Question[] = [
       "It avoids any documentation or comments",
     ],
     correctAnswer: 1,
-    explanation: "Good test cases are understandable, repeatable, traceable to requirements, with clear expectations.",
-    explanationVN: "Các test case tốt dễ hiểu, lặp lại được, truy xoát được yêu cầu, với mong đợi rõ ràng.",
+    explanation:
+      "Good test cases are understandable, repeatable, traceable to requirements, with clear expectations.",
+    explanationVN:
+      "Các test case tốt dễ hiểu, lặp lại được, truy xoát được yêu cầu, với mong đợi rõ ràng.",
   },
   {
     id: "94c63e75-5af9-4d49-9132-4732fcc8d0dd",
@@ -404,8 +457,10 @@ export const questionsChapter1: Question[] = [
       "It must use different test data each time",
     ],
     correctAnswer: 1,
-    explanation: "Independent tests do not rely on other tests' outcomes; they can run in any sequence.",
-    explanationVN: "Test độc lập không phụ thuộc vào kết quả của test khác; có thể chạy ở bất kỳ thứ tự nào.",
+    explanation:
+      "Independent tests do not rely on other tests' outcomes; they can run in any sequence.",
+    explanationVN:
+      "Test độc lập không phụ thuộc vào kết quả của test khác; có thể chạy ở bất kỳ thứ tự nào.",
   },
   {
     id: "15c38729-1e9b-4c9d-b085-c24437a2fc9d",
@@ -418,8 +473,10 @@ export const questionsChapter1: Question[] = [
       "Load and stress testing",
     ],
     correctAnswer: 1,
-    explanation: "Code review is a static technique that finds defects before compilation and testing.",
-    explanationVN: "Review mã là kỹ thuật tĩnh tìm defect trước khi biên dịch và test.",
+    explanation:
+      "Code review is a static technique that finds defects before compilation and testing.",
+    explanationVN:
+      "Review mã là kỹ thuật tĩnh tìm defect trước khi biên dịch và test.",
   },
   {
     id: "2578d5f7-b31a-4b9d-a264-247b69e1c4e2",
@@ -432,8 +489,10 @@ export const questionsChapter1: Question[] = [
       "Optimize overall system performance",
     ],
     correctAnswer: 1,
-    explanation: "Acceptance testing validates that the system meets business requirements before go-live.",
-    explanationVN: "Test chấp nhận xác thực hệ thống đáp ứng yêu cầu kinh doanh trước khi ra mắt.",
+    explanation:
+      "Acceptance testing validates that the system meets business requirements before go-live.",
+    explanationVN:
+      "Test chấp nhận xác thực hệ thống đáp ứng yêu cầu kinh doanh trước khi ra mắt.",
   },
   {
     id: "55d8da29-c095-4b56-a315-ea3c5b39cb77",
@@ -446,8 +505,10 @@ export const questionsChapter1: Question[] = [
       "It only applies to critical severity bugs",
     ],
     correctAnswer: 1,
-    explanation: "Root cause analysis uncovers the underlying reason for defects, enabling process improvement.",
-    explanationVN: "Phân tích nguyên nhân gốc lộ ra lý do cơ bản của defect, cho phép cải thiện quy trình.",
+    explanation:
+      "Root cause analysis uncovers the underlying reason for defects, enabling process improvement.",
+    explanationVN:
+      "Phân tích nguyên nhân gốc lộ ra lý do cơ bản của defect, cho phép cải thiện quy trình.",
   },
   {
     id: "5825e43e-7be6-4896-b961-9bb94e51c7c8",
@@ -460,13 +521,16 @@ export const questionsChapter1: Question[] = [
       "Programmer's name and email only",
     ],
     correctAnswer: 1,
-    explanation: "Effective defect reports include clear identification, reproduction steps, context, and severity.",
-    explanationVN: "Báo cáo defect hiệu quả bao gồm xác định rõ, bước tái tạo, ngữ cảnh, và mức nghiêm.",
+    explanation:
+      "Effective defect reports include clear identification, reproduction steps, context, and severity.",
+    explanationVN:
+      "Báo cáo defect hiệu quả bao gồm xác định rõ, bước tái tạo, ngữ cảnh, và mức nghiêm.",
   },
   {
     id: "33abf637-d719-4729-8dd3-e111cb297ee0",
     chapter: 1,
-    question: "In the test lifecycle, at what point should exit criteria be defined?",
+    question:
+      "In the test lifecycle, at what point should exit criteria be defined?",
     options: [
       "At the very end of testing phase",
       "In the Test Plan before execution begins",
@@ -474,8 +538,10 @@ export const questionsChapter1: Question[] = [
       "After all bugs have been fixed",
     ],
     correctAnswer: 1,
-    explanation: "Exit criteria should be defined in the planning phase to establish clear success metrics.",
-    explanationVN: "Tiêu chí thoát nên định nghĩa trong giai đoạn lập kế hoạch để thiết lập rõ ràng thước đo thành công.",
+    explanation:
+      "Exit criteria should be defined in the planning phase to establish clear success metrics.",
+    explanationVN:
+      "Tiêu chí thoát nên định nghĩa trong giai đoạn lập kế hoạch để thiết lập rõ ràng thước đo thành công.",
   },
   {
     id: "adc3ce67-8e12-4029-a767-488c1814f1a4",
@@ -488,8 +554,10 @@ export const questionsChapter1: Question[] = [
       "It eliminates the need for other testing techniques",
     ],
     correctAnswer: 1,
-    explanation: "Boundary value analysis targets boundary conditions where off-by-one and threshold defects occur.",
-    explanationVN: "Phân tích giá trị biên nhắm mục tiêu điều kiện biên nơi xảy ra lỗi off-by-one và ngưỡng.",
+    explanation:
+      "Boundary value analysis targets boundary conditions where off-by-one and threshold defects occur.",
+    explanationVN:
+      "Phân tích giá trị biên nhắm mục tiêu điều kiện biên nơi xảy ra lỗi off-by-one và ngưỡng.",
   },
   {
     id: "03f99504-a683-4ccf-b767-42366ef38d99",
@@ -502,8 +570,10 @@ export const questionsChapter1: Question[] = [
       "Exploratory is only for manual testers",
     ],
     correctAnswer: 1,
-    explanation: "Exploratory testing uses tester skill and intuition to find defects scripted tests might miss.",
-    explanationVN: "Test khám phá dùng kỹ năng tester và trực giác để tìm defect mà test kịch bản có thể bỏ sót.",
+    explanation:
+      "Exploratory testing uses tester skill and intuition to find defects scripted tests might miss.",
+    explanationVN:
+      "Test khám phá dùng kỹ năng tester và trực giác để tìm defect mà test kịch bản có thể bỏ sót.",
   },
   {
     id: "1dad5ccd-57e7-4990-b975-ec29650be7ed",
@@ -516,8 +586,10 @@ export const questionsChapter1: Question[] = [
       "A software development framework",
     ],
     correctAnswer: 1,
-    explanation: "A test suite is an organized collection of test cases, often with shared setup and teardown.",
-    explanationVN: "Test suite là bộ sưu tập các test case được tổ chức, thường có setup và teardown chung.",
+    explanation:
+      "A test suite is an organized collection of test cases, often with shared setup and teardown.",
+    explanationVN:
+      "Test suite là bộ sưu tập các test case được tổ chức, thường có setup và teardown chung.",
   },
   {
     id: "607854b8-11bc-4a1d-86c7-e67ec7dc4a0d",
@@ -530,8 +602,10 @@ export const questionsChapter1: Question[] = [
       "It is required only for failed tests",
     ],
     correctAnswer: 1,
-    explanation: "Documentation ensures tests can be repeated, maintained, and lessons are captured.",
-    explanationVN: "Tài liệu đảm bảo test có thể lặp lại, bảo trì, và bài học được ghi lại.",
+    explanation:
+      "Documentation ensures tests can be repeated, maintained, and lessons are captured.",
+    explanationVN:
+      "Tài liệu đảm bảo test có thể lặp lại, bảo trì, và bài học được ghi lại.",
   },
   {
     id: "3aaae47f-6918-48b5-b71e-201505c29854",
@@ -544,8 +618,10 @@ export const questionsChapter1: Question[] = [
       "Only code coverage matters; other metrics are unnecessary",
     ],
     correctAnswer: 1,
-    explanation: "Coverage is necessary but not sufficient; good tests require meaningful assertions and scenarios.",
-    explanationVN: "Coverage cần thiết nhưng không đủ; test tốt cần assertion có ý nghĩa và kịch bản.",
+    explanation:
+      "Coverage is necessary but not sufficient; good tests require meaningful assertions and scenarios.",
+    explanationVN:
+      "Coverage cần thiết nhưng không đủ; test tốt cần assertion có ý nghĩa và kịch bản.",
   },
   {
     id: "39e5f389-527b-43f0-a906-d288aa5948cf",
@@ -558,8 +634,10 @@ export const questionsChapter1: Question[] = [
       "When management says to stop",
     ],
     correctAnswer: 1,
-    explanation: "Stop when exit criteria (coverage, severity, time) are achieved and residual risk is acceptable.",
-    explanationVN: "Dừng khi tiêu chí thoát (coverage, mức nghiêm, thời gian) đạt được và rủi ro còn lại chấp nhận được.",
+    explanation:
+      "Stop when exit criteria (coverage, severity, time) are achieved and residual risk is acceptable.",
+    explanationVN:
+      "Dừng khi tiêu chí thoát (coverage, mức nghiêm, thời gian) đạt được và rủi ro còn lại chấp nhận được.",
   },
   {
     id: "ae59db6b-91b0-42c2-b05c-9ec82bb49ee5",
@@ -572,8 +650,10 @@ export const questionsChapter1: Question[] = [
       "To formally approve the test plan document",
     ],
     correctAnswer: 1,
-    explanation: "Entry criteria check that prerequisites (requirements, env, testware) are ready before starting.",
-    explanationVN: "Tiêu chí nhập kiểm tra rằng điều kiện tiên quyết (yêu cầu, env, testware) sẵn sàng trước khi bắt đầu.",
+    explanation:
+      "Entry criteria check that prerequisites (requirements, env, testware) are ready before starting.",
+    explanationVN:
+      "Tiêu chí nhập kiểm tra rằng điều kiện tiên quyết (yêu cầu, env, testware) sẵn sàng trước khi bắt đầu.",
   },
   {
     id: "e3f2a6c1-82e3-4b9f-85f3-7a5d2c8b1e9a",
@@ -586,8 +666,10 @@ export const questionsChapter1: Question[] = [
       "From easiest to hardest test cases",
     ],
     correctAnswer: 1,
-    explanation: "Prioritization ensures critical and high-risk areas are tested early and thoroughly.",
-    explanationVN: "Ưu tiên hóa đảm bảo các khu vực quan trọng và rủi ro cao được test sớm và kỹ lưỡng.",
+    explanation:
+      "Prioritization ensures critical and high-risk areas are tested early and thoroughly.",
+    explanationVN:
+      "Ưu tiên hóa đảm bảo các khu vực quan trọng và rủi ro cao được test sớm và kỹ lưỡng.",
   },
   {
     id: "f4b7c3d2-91e0-4a6c-b8c5-2d3e4f5a6b7c",
@@ -600,8 +682,10 @@ export const questionsChapter1: Question[] = [
       "Testing only matters in production",
     ],
     correctAnswer: 1,
-    explanation: "Testing helps ensure quality by finding defects; quality comes from good design and processes.",
-    explanationVN: "Test giúp đảm bảo chất lượng bằng cách tìm defect; chất lượng đến từ thiết kế và quy trình tốt.",
+    explanation:
+      "Testing helps ensure quality by finding defects; quality comes from good design and processes.",
+    explanationVN:
+      "Test giúp đảm bảo chất lượng bằng cách tìm defect; chất lượng đến từ thiết kế và quy trình tốt.",
   },
   {
     id: "g5c8d4e3-a2f1-4b7d-c9d6-3e4f5g6h7i8j",
@@ -614,8 +698,10 @@ export const questionsChapter1: Question[] = [
       "How many testers you need for the project",
     ],
     correctAnswer: 1,
-    explanation: "Testability refers to the ease by which a product's defects can be discovered when tested.",
-    explanationVN: "Khả năng kiểm tra đề cập đến mức độ dễ dàng tìm ra defect của sản phẩm khi test.",
+    explanation:
+      "Testability refers to the ease by which a product's defects can be discovered when tested.",
+    explanationVN:
+      "Khả năng kiểm tra đề cập đến mức độ dễ dàng tìm ra defect của sản phẩm khi test.",
   },
   {
     id: "h6d9e5f4-b3g2-5c8e-d0e7-4f5g6h7i9k0l",
@@ -628,8 +714,10 @@ export const questionsChapter1: Question[] = [
       "Avoid detailed documentation",
     ],
     correctAnswer: 1,
-    explanation: "Good communication ensures alignment, prevents duplicate work, and speeds defect resolution.",
-    explanationVN: "Giao tiếp tốt đảm bảo căn chỉnh, ngăn công việc trùng, và tăng tốc độ giải quyết defect.",
+    explanation:
+      "Good communication ensures alignment, prevents duplicate work, and speeds defect resolution.",
+    explanationVN:
+      "Giao tiếp tốt đảm bảo căn chỉnh, ngăn công việc trùng, và tăng tốc độ giải quyết defect.",
   },
   {
     id: "i7e0f6g5-c4h3-6d9f-e1f8-5g6h7i8j0k1m",
@@ -642,8 +730,10 @@ export const questionsChapter1: Question[] = [
       "Metrics are for management reports only",
     ],
     correctAnswer: 1,
-    explanation: "Metrics (defects/LOC, coverage, pass rate) provide objective data for process improvement.",
-    explanationVN: "Số liệu (defect/LOC, coverage, tỷ lệ pass) cung cấp dữ liệu khách quan để cải thiện quy trình.",
+    explanation:
+      "Metrics (defects/LOC, coverage, pass rate) provide objective data for process improvement.",
+    explanationVN:
+      "Số liệu (defect/LOC, coverage, tỷ lệ pass) cung cấp dữ liệu khách quan để cải thiện quy trình.",
   },
   {
     id: "j8f1g7h6-d5i4-7e0g-f2g9-6h7i8j9k1l2n",
@@ -656,8 +746,10 @@ export const questionsChapter1: Question[] = [
       "Agile doesn't require detailed test planning",
     ],
     correctAnswer: 1,
-    explanation: "Agile testing is continuous, collaborative, and emphasizes automation and rapid feedback.",
-    explanationVN: "Test Agile liên tục, cộng tác, và nhấn mạnh automation và phản hồi nhanh.",
+    explanation:
+      "Agile testing is continuous, collaborative, and emphasizes automation and rapid feedback.",
+    explanationVN:
+      "Test Agile liên tục, cộng tác, và nhấn mạnh automation và phản hồi nhanh.",
   },
   {
     id: "k9g2h8i7-e6j5-8f1h-g3h0-7i8j9k0l2m3o",
@@ -670,8 +762,10 @@ export const questionsChapter1: Question[] = [
       "It requires no maintenance once created",
     ],
     correctAnswer: 1,
-    explanation: "Automation excels at repetitive tasks, regression testing, and continuous integration.",
-    explanationVN: "Automation xuất sắc ở các tác vụ lặp lại, test hồi quy, và liên tục tích hợp.",
+    explanation:
+      "Automation excels at repetitive tasks, regression testing, and continuous integration.",
+    explanationVN:
+      "Automation xuất sắc ở các tác vụ lặp lại, test hồi quy, và liên tục tích hợp.",
   },
   {
     id: "l0h3i9j8-f7k6-9g2i-h4i1-8j9k0l1m3n4p",
@@ -684,8 +778,10 @@ export const questionsChapter1: Question[] = [
       "Never; automation is always better",
     ],
     correctAnswer: 1,
-    explanation: "Manual testing excels where judgment, creativity, and subjective evaluation are needed.",
-    explanationVN: "Test thủ công xuất sắc nơi cần nhận xét, sáng tạo, và đánh giá chủ quan.",
+    explanation:
+      "Manual testing excels where judgment, creativity, and subjective evaluation are needed.",
+    explanationVN:
+      "Test thủ công xuất sắc nơi cần nhận xét, sáng tạo, và đánh giá chủ quan.",
   },
   {
     id: "m1i4j0k9-g8l7-0h3j-i5j2-9k0l1m2n4o5q",
@@ -698,8 +794,10 @@ export const questionsChapter1: Question[] = [
       "Any place with a computer",
     ],
     correctAnswer: 1,
-    explanation: "Test environment mimics production as closely as possible to ensure realistic testing.",
-    explanationVN: "Test environment bắt chước production càng gần càng tốt để đảm bảo test thực tế.",
+    explanation:
+      "Test environment mimics production as closely as possible to ensure realistic testing.",
+    explanationVN:
+      "Test environment bắt chước production càng gần càng tốt để đảm bảo test thực tế.",
   },
   {
     id: "n2j5k1l0-h9m8-1i4k-j6k3-0l1m2n3o5p6r",
@@ -712,8 +810,10 @@ export const questionsChapter1: Question[] = [
       "Use random strings and numbers only",
     ],
     correctAnswer: 1,
-    explanation: "Good test data is representative, secure, privacy-aware, and reproducible.",
-    explanationVN: "Dữ liệu test tốt là đại diện, an toàn, bảo mật, và có thể tái tạo.",
+    explanation:
+      "Good test data is representative, secure, privacy-aware, and reproducible.",
+    explanationVN:
+      "Dữ liệu test tốt là đại diện, an toàn, bảo mật, và có thể tái tạo.",
   },
   {
     id: "o3k6l2m1-i0n9-2j5l-k7l4-1m2n3o4p6q7s",
@@ -726,8 +826,10 @@ export const questionsChapter1: Question[] = [
       "A type of defect classification",
     ],
     correctAnswer: 1,
-    explanation: "An oracle (specification, existing version, expert judgment) defines what 'correct' means.",
-    explanationVN: "Oracle (specification, version hiện tại, đánh giá chuyên gia) định nghĩa 'đúng' là gì.",
+    explanation:
+      "An oracle (specification, existing version, expert judgment) defines what 'correct' means.",
+    explanationVN:
+      "Oracle (specification, version hiện tại, đánh giá chuyên gia) định nghĩa 'đúng' là gì.",
   },
   {
     id: "p4l7m3n2-j1o0-3k6m-l8m5-2n3o4p5q7r8t",
@@ -740,8 +842,10 @@ export const questionsChapter1: Question[] = [
       "By the number of testers on the project",
     ],
     correctAnswer: 1,
-    explanation: "Effectiveness measures how well testing detects actual defects (e.g., defect escape rate).",
-    explanationVN: "Hiệu quả đo lường test phát hiện defect thực tế tốt như thế nào (ví dụ: defect escape rate).",
+    explanation:
+      "Effectiveness measures how well testing detects actual defects (e.g., defect escape rate).",
+    explanationVN:
+      "Hiệu quả đo lường test phát hiện defect thực tế tốt như thế nào (ví dụ: defect escape rate).",
   },
   {
     id: "q5m8n4o3-k2p1-4l7n-m9n6-3o4p5q6r8s9u",
@@ -754,8 +858,10 @@ export const questionsChapter1: Question[] = [
       "It only applies to critical severity bugs",
     ],
     correctAnswer: 1,
-    explanation: "Incident management ensures defect tracking, prioritization, and resolution accountability.",
-    explanationVN: "Quản lý sự cố đảm bảo theo dõi defect, ưu tiên hóa, và accountability giải quyết.",
+    explanation:
+      "Incident management ensures defect tracking, prioritization, and resolution accountability.",
+    explanationVN:
+      "Quản lý sự cố đảm bảo theo dõi defect, ưu tiên hóa, và accountability giải quyết.",
   },
   {
     id: "r6n9o5p4-l3q2-5m8o-n0o7-4p5q6r7s9t0v",
@@ -768,8 +874,10 @@ export const questionsChapter1: Question[] = [
       "Peer review is unnecessary in modern projects",
     ],
     correctAnswer: 1,
-    explanation: "Peer review (static) finds defects early; testing (dynamic) finds defects at execution.",
-    explanationVN: "Peer review (tĩnh) tìm defect sớm; testing (động) tìm defect khi chạy.",
+    explanation:
+      "Peer review (static) finds defects early; testing (dynamic) finds defects at execution.",
+    explanationVN:
+      "Peer review (tĩnh) tìm defect sớm; testing (động) tìm defect khi chạy.",
   },
   {
     id: "s7o0p6q5-m4r3-6n9p-o1p8-5q6r7s8t0u1w",
@@ -782,8 +890,10 @@ export const questionsChapter1: Question[] = [
       "It only tracks bug reports",
     ],
     correctAnswer: 1,
-    explanation: "Configuration management ensures tests run on correct versions and results are reproducible.",
-    explanationVN: "Quản lý cấu hình đảm bảo test chạy trên phiên bản đúng và kết quả có thể tái tạo.",
+    explanation:
+      "Configuration management ensures tests run on correct versions and results are reproducible.",
+    explanationVN:
+      "Quản lý cấu hình đảm bảo test chạy trên phiên bản đúng và kết quả có thể tái tạo.",
   },
   {
     id: "t8p1q7r6-n5s4-7o0q-p2q9-6r7s8t9u1v2x",
@@ -796,8 +906,10 @@ export const questionsChapter1: Question[] = [
       "When time and budget permit",
     ],
     correctAnswer: 1,
-    explanation: "Frequent regression testing (especially automated) catches regressions early.",
-    explanationVN: "Test hồi quy thường xuyên (đặc biệt automation) bắt hồi quy sớm.",
+    explanation:
+      "Frequent regression testing (especially automated) catches regressions early.",
+    explanationVN:
+      "Test hồi quy thường xuyên (đặc biệt automation) bắt hồi quy sớm.",
   },
   {
     id: "u9q2r8s7-o6t5-8p1r-q3r0-7s8t9u0v2w3y",
@@ -810,8 +922,10 @@ export const questionsChapter1: Question[] = [
       "Minimal information and brief overview",
     ],
     correctAnswer: 1,
-    explanation: "Good reports summarize findings, highlight risk, and enable data-driven decisions.",
-    explanationVN: "Báo cáo tốt dụ kết quả, phác họa rủi ro, và cho phép quyết định dựa dữ liệu.",
+    explanation:
+      "Good reports summarize findings, highlight risk, and enable data-driven decisions.",
+    explanationVN:
+      "Báo cáo tốt dụ kết quả, phác họa rủi ro, và cho phép quyết định dựa dữ liệu.",
   },
   {
     id: "v0r3s9t8-p7u6-9q2s-r4s1-8t9u0v1w3x4z",
@@ -824,8 +938,10 @@ export const questionsChapter1: Question[] = [
       "To test the underlying code quality",
     ],
     correctAnswer: 1,
-    explanation: "Usability testing ensures the product is user-friendly, accessible, and meets user expectations.",
-    explanationVN: "Test khả dụng đảm bảo sản phẩm thân thiện người dùng, tiếp cận, và đáp ứng kỳ vọng.",
+    explanation:
+      "Usability testing ensures the product is user-friendly, accessible, and meets user expectations.",
+    explanationVN:
+      "Test khả dụng đảm bảo sản phẩm thân thiện người dùng, tiếp cận, và đáp ứng kỳ vọng.",
   },
   {
     id: "w1s4t0u9-q8v7-0r3t-s5t2-9u0v1w2x4y5a",
@@ -838,8 +954,10 @@ export const questionsChapter1: Question[] = [
       "Only test on the latest versions available",
     ],
     correctAnswer: 1,
-    explanation: "Compatibility testing ensures the software works across the environments users access it from.",
-    explanationVN: "Test tương thích đảm bảo phần mềm hoạt động trên các môi trường người dùng truy cập.",
+    explanation:
+      "Compatibility testing ensures the software works across the environments users access it from.",
+    explanationVN:
+      "Test tương thích đảm bảo phần mềm hoạt động trên các môi trường người dùng truy cập.",
   },
   {
     id: "x2t5u1v0-r9w8-1s4u-t6u3-0v1w2x3y5z6b",
@@ -852,8 +970,10 @@ export const questionsChapter1: Question[] = [
       "To replace functional testing entirely",
     ],
     correctAnswer: 1,
-    explanation: "Performance testing ensures system can handle expected and peak loads reliably.",
-    explanationVN: "Test hiệu suất đảm bảo hệ thống chịu được tải mong đợi và tối đa một cách tin cậy.",
+    explanation:
+      "Performance testing ensures system can handle expected and peak loads reliably.",
+    explanationVN:
+      "Test hiệu suất đảm bảo hệ thống chịu được tải mong đợi và tối đa một cách tin cậy.",
   },
   {
     id: "y3u6v2w1-s0x9-2t5v-u7v4-1w2x3y4z6a7c",
@@ -866,8 +986,10 @@ export const questionsChapter1: Question[] = [
       "Only conduct security testing after release",
     ],
     correctAnswer: 1,
-    explanation: "Security testing identifies vulnerabilities, protects user data, and meets compliance requirements.",
-    explanationVN: "Test bảo mật xác định lỗ hổng, bảo vệ dữ liệu, và đáp ứng yêu cầu tuân thủ.",
+    explanation:
+      "Security testing identifies vulnerabilities, protects user data, and meets compliance requirements.",
+    explanationVN:
+      "Test bảo mật xác định lỗ hổng, bảo vệ dữ liệu, và đáp ứng yêu cầu tuân thủ.",
   },
   {
     id: "z4v7w3x2-t1y0-3u6w-v8w5-2x3y4z5a7b8d",
@@ -880,8 +1002,10 @@ export const questionsChapter1: Question[] = [
       "Developers should test their own code exclusively",
     ],
     correctAnswer: 1,
-    explanation: "Independent testing (separate from development) provides objective evaluation and bias reduction.",
-    explanationVN: "Test độc lập (tách biệt khỏi phát triển) cung cấp đánh giá khách quan và giảm thiên vị.",
+    explanation:
+      "Independent testing (separate from development) provides objective evaluation and bias reduction.",
+    explanationVN:
+      "Test độc lập (tách biệt khỏi phát triển) cung cấp đánh giá khách quan và giảm thiên vị.",
   },
   {
     id: "a5w8x4y3-u2z1-4v7x-w9x6-3y4z5a6b8c9e",
@@ -894,8 +1018,10 @@ export const questionsChapter1: Question[] = [
       "Ignore requirement changes and additions",
     ],
     correctAnswer: 1,
-    explanation: "Clear scope definition and formal change control prevent unmanaged expansion of testing effort.",
-    explanationVN: "Định nghĩa phạm vi rõ ràng và kiểm soát thay đổi chính thức ngăn mở rộng nỗ lực không kiểm soát.",
+    explanation:
+      "Clear scope definition and formal change control prevent unmanaged expansion of testing effort.",
+    explanationVN:
+      "Định nghĩa phạm vi rõ ràng và kiểm soát thay đổi chính thức ngăn mở rộng nỗ lực không kiểm soát.",
   },
   {
     id: "b6x9y5z4-v3a2-5w8y-x0y7-4z5a6b7c9d0f",
@@ -908,8 +1034,10 @@ export const questionsChapter1: Question[] = [
       "Testing can easily ignore technical debt",
     ],
     correctAnswer: 1,
-    explanation: "Technical debt (poor design, legacy code) increases defect risk and testing complications.",
-    explanationVN: "Nợ kỹ thuật (thiết kế tồi, mã legacy) tăng rủi ro defect và phức tạp kiểm thử.",
+    explanation:
+      "Technical debt (poor design, legacy code) increases defect risk and testing complications.",
+    explanationVN:
+      "Nợ kỹ thuật (thiết kế tồi, mã legacy) tăng rủi ro defect và phức tạp kiểm thử.",
   },
   {
     id: "c7y0z6a5-w4b3-6x9z-y1z8-5a6b7c8d0e1g",
@@ -922,8 +1050,10 @@ export const questionsChapter1: Question[] = [
       "Minimize communication between team members",
     ],
     correctAnswer: 1,
-    explanation: "Effective distributed testing needs documented processes, shared visibility, and communication.",
-    explanationVN: "Test phân tán hiệu quả cần quy trình tài liệu, hiển thị chung, và giao tiếp.",
+    explanation:
+      "Effective distributed testing needs documented processes, shared visibility, and communication.",
+    explanationVN:
+      "Test phân tán hiệu quả cần quy trình tài liệu, hiển thị chung, và giao tiếp.",
   },
   {
     id: "d8z1a7b6-x5c4-7y0a-z2a9-6b7c8d9e1f2h",
@@ -936,8 +1066,10 @@ export const questionsChapter1: Question[] = [
       "Customers delay and complicate testing",
     ],
     correctAnswer: 1,
-    explanation: "Customer collaboration ensures testing aligns with actual business needs and user scenarios.",
-    explanationVN: "Cộng tác khách hàng đảm bảo test căn chỉnh với nhu cầu kinh doanh thực và kịch bản người dùng.",
+    explanation:
+      "Customer collaboration ensures testing aligns with actual business needs and user scenarios.",
+    explanationVN:
+      "Cộng tác khách hàng đảm bảo test căn chỉnh với nhu cầu kinh doanh thực và kịch bản người dùng.",
   },
   {
     id: "e9a2b8c7-y6d5-8z1b-a3b0-7c8d9e0f2g3i",
@@ -950,7 +1082,9 @@ export const questionsChapter1: Question[] = [
       "Only production environment testing matters",
     ],
     correctAnswer: 1,
-    explanation: "Environment fidelity affects test relevance; gaps between test and production hide real issues.",
-    explanationVN: "Độ trung thực environment ảnh hưởng đến liên quan test; khoảng cách giữa test và production ẩn vấn đề thực.",
+    explanation:
+      "Environment fidelity affects test relevance; gaps between test and production hide real issues.",
+    explanationVN:
+      "Độ trung thực environment ảnh hưởng đến liên quan test; khoảng cách giữa test và production ẩn vấn đề thực.",
   },
 ];
