@@ -1,10 +1,5 @@
 import type { Question } from "../types";
-import { questionsChapter1 } from "./chapter1";
-import { questionsChapter2 } from "./chapter2";
-import { questionsChapter3 } from "./chapter3";
-import { questionsChapter4 } from "./chapter4";
-import { questionsChapter5 } from "./chapter5";
-import { questionsChapter6 } from "./chapter6";
+import { questionsISTQB } from "./istqb";
 
 // Re-export courses and configs
 export {
@@ -33,14 +28,7 @@ export const CHAPTER_TITLES: Record<number, string> = {
   6: "Test Tools",
 };
 
-export const allQuestions: Question[] = [
-  ...questionsChapter1,
-  ...questionsChapter2,
-  ...questionsChapter3,
-  ...questionsChapter4,
-  ...questionsChapter5,
-  ...questionsChapter6,
-];
+export const allQuestions: Question[] = [...questionsISTQB];
 
 export const getQuestionsByChapter = (chapterId: number): Question[] => {
   const filtered = allQuestions.filter((q) => q.chapter === chapterId);
@@ -53,6 +41,8 @@ export const getAvailableChapters = (): number[] => {
 };
 
 // Get random questions from all courses (for backward compatibility)
-export const getRandomExamQuestionsLegacy = (count: number = 40): Question[] => {
+export const getRandomExamQuestionsLegacy = (
+  count: number = 40,
+): Question[] => {
   return [...allQuestions].sort(() => Math.random() - 0.5).slice(0, count);
 };

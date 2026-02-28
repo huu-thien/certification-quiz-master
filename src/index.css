@@ -1,5 +1,4 @@
 @import "tailwindcss";
-/* Tùy chỉnh thanh cuộn để giao diện chuyên nghiệp hơn */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
@@ -7,7 +6,7 @@
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1; /* Màu xám nhạt */
+  background-color: #cbd5e1;
   border-radius: 20px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {

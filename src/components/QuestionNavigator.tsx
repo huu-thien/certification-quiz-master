@@ -21,8 +21,8 @@ export const QuestionNavigator = ({
   };
 
   return (
-    // Bỏ h-fit, thay bằng cố định chiều cao tối đa (ví dụ: 70% viewport)
-    <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col max-h-[70vh]">
+    // Make navigator fill available vertical space inside sidebar
+    <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-full">
       <h3 className="font-bold text-gray-700 mb-4 text-xs uppercase tracking-wider shrink-0">
         Danh sách câu hỏi
       </h3>
@@ -35,7 +35,7 @@ export const QuestionNavigator = ({
               key={i}
               onClick={() => onSelect(i)}
               className={`w-full aspect-square rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center ${getButtonClass(
-                i
+                i,
               )}`}
             >
               {i + 1}

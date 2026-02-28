@@ -21,10 +21,13 @@ export const QuizCard = ({
   const getLabel = (i: number) => `${String.fromCharCode(65 + i)}.`;
 
   return (
-    <div className="w-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-      <h2 className="text-xl font-bold text-gray-800 mb-6">{data.question}</h2>
+    <div className="w- h-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100 flex flex-col">
+      {/* scrollable container contains question, options and explanation */}
+      <div className="flex-1 space-y-3 overflow-y-auto custom-scrollbar pr-2">
+        <h2 className="text-xl font-bold text-gray-800 mb-6">
+          {data.question}
+        </h2>
 
-      <div className="space-y-3">
         {data.options.map((opt: string, i: number) => {
           const isCorrect = i === data.correctAnswer;
           const isSelected = i === selectedAnswer;
@@ -74,36 +77,34 @@ export const QuizCard = ({
             </button>
           );
         })}
-      </div>
-
-      {/* Phần giải thích chi tiết */}
-      {showExplanation && (
-        <div className="mt-8 p-6 bg-blue-50 border-l-4 border-blue-500 rounded-r-2xl shadow-sm animate-in fade-in duration-500">
-          <div className="flex items-center gap-2 mb-3 text-blue-800">
-            <div className="p-1.5 bg-blue-200 rounded-lg">
-              <Lightbulb size={18} />
+        {showExplanation && (
+          <div className="mt-8 p-6 bg-blue-50 border-l-4 border-blue-500 rounded-r-2xl shadow-sm animate-in fade-in duration-500">
+            <div className="flex items-center gap-2 mb-3 text-blue-800">
+              <div className="p-1.5 bg-blue-200 rounded-lg">
+                <Lightbulb size={18} />
+              </div>
+              <h3 className="font-bold uppercase tracking-wider text-sm">
+                Giải thích chi tiết
+              </h3>
             </div>
-            <h3 className="font-bold uppercase tracking-wider text-sm">
-              Giải thích chi tiết
-            </h3>
+
+            <p className="text-gray-800 leading-relaxed font-medium text-lg">
+              {data.explanationVN}
+            </p>
+
+            {data.explanationVN && data.explanation && (
+              <div className="mt-5 pt-4 border-t border-blue-200">
+                <p className="text-xs text-blue-600 font-bold uppercase mb-1">
+                  Reference (English)
+                </p>
+                <p className="text-blue-700 italic text-sm leading-relaxed">
+                  {data.explanation}
+                </p>
+              </div>
+            )}
           </div>
-
-          <p className="text-gray-800 leading-relaxed font-medium text-lg">
-            {data.explanationVN}
-          </p>
-
-          {data.explanationVN && data.explanation && (
-            <div className="mt-5 pt-4 border-t border-blue-200">
-              <p className="text-xs text-blue-600 font-bold uppercase mb-1">
-                Reference (English)
-              </p>
-              <p className="text-blue-700 italic text-sm leading-relaxed">
-                {data.explanation}
-              </p>
-            </div>
-          )}
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

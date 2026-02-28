@@ -11,9 +11,9 @@ export const CourseSelector = ({
   onSelectCourse,
 }: CourseSelectorProps) => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-yellow-50 via-white to-green-50 p-6">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
+        <h1 className="text-4xl font-extrabold text-indigo-900 mb-2">
           Chọn Bộ Thi
         </h1>
         <p className="text-gray-600">
@@ -27,7 +27,7 @@ export const CourseSelector = ({
             <button
               key={course.id}
               onClick={() => onSelectCourse(course)}
-              className="group flex flex-col p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-indigo-500 hover:shadow-2xl transition-all text-left hover:scale-105 transform"
+              className="group flex flex-col p-6 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-indigo-500 hover:shadow-2xl transition-all text-left hover:scale-105 transform"
             >
               <div className="p-3 bg-indigo-100 text-indigo-600 rounded-full mb-4 w-fit group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                 <PackageOpen size={32} />

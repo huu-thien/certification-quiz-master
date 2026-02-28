@@ -13,6 +13,7 @@ export interface CourseConfig {
   name: string;
   description: string;
   totalQuestions: number;
+  examQuestionsCount?: number;
   examDuration: number;
   passingScore: number;
   chapters: {
@@ -20,7 +21,7 @@ export interface CourseConfig {
   };
 }
 
-export type QuizMode = 'idle' | 'practice' | 'exam';
+export type QuizMode = "idle" | "practice" | "exam";
 
 export interface QuizState {
   mode: QuizMode;

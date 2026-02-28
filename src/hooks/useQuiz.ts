@@ -34,7 +34,10 @@ export const useQuizState = () => {
   const startExam = useCallback((courseId: string) => {
     const config = getCourseConfig(courseId);
     if (!config) return;
-    const questions = getRandomExamQuestions(courseId, config.totalQuestions);
+    const questions = getRandomExamQuestions(
+      courseId,
+      config.examQuestionsCount,
+    );
     setState((prev) => ({
       ...prev,
       mode: "exam",

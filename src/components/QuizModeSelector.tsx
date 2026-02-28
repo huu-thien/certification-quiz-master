@@ -22,9 +22,9 @@ export const QuizModeSelector = ({
   const chapters = getAvailableChaptersByCourse(course.id);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-50 via-white to-pink-50 p-8">
+      <div className="text-center mb-12 max-w-3xl">
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-2 whitespace-nowrap">
           {course.name}
         </h1>
         <p className="text-gray-600">
@@ -61,12 +61,6 @@ export const QuizModeSelector = ({
             >
               Quay lại
             </button>
-            <button
-              onClick={onSelectCourse}
-              className="flex-1 px-4 py-2 text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors font-medium"
-            >
-              Chọn bộ thi khác
-            </button>
           </div>
         </div>
       ) : (
@@ -76,7 +70,7 @@ export const QuizModeSelector = ({
             {/* Practice Mode */}
             <button
               onClick={onSelectCourse}
-              className="group flex flex-col items-center p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-blue-500 hover:shadow-2xl transition-all"
+              className="group flex flex-col items-center p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-blue-500 hover:shadow-2xl hover:scale-105 transform transition-all"
             >
               <div className="p-4 bg-blue-100 text-blue-600 rounded-full mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                 <BookOpen size={40} />
@@ -90,7 +84,7 @@ export const QuizModeSelector = ({
             {/* Exam Mode */}
             <button
               onClick={onStartExam}
-              className="group flex flex-col items-center p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-yellow-500 hover:shadow-2xl transition-all"
+              className="group flex flex-col items-center p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-yellow-500 hover:shadow-2xl hover:scale-105 transform transition-all"
             >
               <div className="p-4 bg-yellow-100 text-yellow-600 rounded-full mb-4 group-hover:bg-yellow-600 group-hover:text-white transition-colors">
                 <Trophy size={40} />

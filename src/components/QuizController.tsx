@@ -1,4 +1,10 @@
-import { ArrowLeft, ArrowRight, Trophy, RotateCcw, BookOpen } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Trophy,
+  RotateCcw,
+  BookOpen,
+} from "lucide-react";
 import { QuizCard } from "./QuizCard";
 import { QuestionNavigator } from "./QuestionNavigator";
 import { Timer } from "./Timer";
@@ -34,9 +40,9 @@ export const QuizController = ({
   onTimeout,
 }: QuizControllerProps) => {
   const currentQuestion = state.questions[state.currentIdx];
-  const currentChapter = state.mode === "practice" ? state.selectedChapter : null;
+  const currentChapter =
+    state.mode === "practice" ? state.selectedChapter : null;
 
-  // Xác định nội dung tiêu đề chính
   let headerTitle = "";
   if (state.mode === "exam") {
     headerTitle = `Thi thử ${courseConfig?.name || ""}`;
@@ -50,7 +56,7 @@ export const QuizController = ({
     if (state.mode === "exam" && !state.isSubmitted) {
       if (
         !window.confirm(
-          "Bạn đang làm bài thi! Thoát sẽ mất dữ liệu. Chắc chắn chứ?"
+          "Bạn đang làm bài thi! Thoát sẽ mất dữ liệu. Chắc chắn chứ?",
         )
       )
         return;
@@ -63,10 +69,10 @@ export const QuizController = ({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-6">
+    <div className="h-screen bg-gray-50 p-4 md:p-8 flex flex-col overflow-hidden">
+      <div className="max-w-6xl mx-auto flex-1 flex flex-col md:flex-row gap-6 overflow-hidden">
         {/* Sidebar Left */}
-        <aside className="md:w-64 shrink-0">
+        <aside className="md:w-64 shrink-0 flex flex-col overflow-hidden">
           <QuestionNavigator
             total={state.questions.length}
             currentIdx={state.currentIdx}
@@ -76,10 +82,17 @@ export const QuizController = ({
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 flex flex-col gap-6">
+        <main className="w-[50vw] flex-1 flex flex-col gap-4 overflow-hidden min-w-0">
           {/* CONTEXT BAR */}
           <div className="bg-white px-6 py-3 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
             <div className="flex items-center gap-3">
+              <button
+                onClick={handleBack}
+                className="flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors font-medium hover:bg-red-50 p-2 rounded-lg"
+                aria-label={state.isSubmitted ? "Back to home" : "Back"}
+              >
+                <RotateCcw size={18} />
+              </button>
               <div
                 className={`p-2 rounded-lg ${
                   state.mode === "exam"
@@ -96,45 +109,17 @@ export const QuizController = ({
                 </p>
               </div>
             </div>
-          </div>
-
-          {/* HEADER */}
-          <div className="flex items-center justify-between bg-white px-6 py-4 rounded-2xl shadow-sm border border-gray-100 min-h-[72px]">
-            {/* Left: Back button */}
-            <div className="flex-1 flex justify-start">
-              <button
-                onClick={handleBack}
-                className="flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors font-medium hover:bg-red-50 px-3 py-2 rounded-lg"
-              >
-                <RotateCcw size={18} /> {state.isSubmitted ? "Về trang chủ" : "Thoát"}
-              </button>
-            </div>
-
-            {/* Center: Question number */}
-            <div className="flex-1 text-center font-bold text-gray-700 text-lg">
-              {state.isSubmitted ? (
-                <span className="text-blue-600">Xem lại bài thi</span>
-              ) : (
-                <span>
-                  Câu {state.currentIdx + 1} / {state.questions.length}
+            {state.mode === "exam" && !state.isSubmitted && courseConfig && (
+              <div className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl border border-gray-100 shadow-inner">
+                <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                  Time
                 </span>
-              )}
-            </div>
-
-            {/* Right: Timer */}
-            <div className="flex-1 flex justify-end">
-              {state.mode === "exam" && !state.isSubmitted && courseConfig && (
-                <div className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl border border-gray-100 shadow-inner">
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                    Time
-                  </span>
-                  <Timer
-                    duration={courseConfig.examDuration}
-                    onTimeout={onTimeout}
-                  />
-                </div>
-              )}
-            </div>
+                <Timer
+                  duration={courseConfig.examDuration}
+                  onTimeout={onTimeout}
+                />
+              </div>
+            )}
           </div>
 
           {/* RESULTS SUMMARY */}
@@ -163,19 +148,21 @@ export const QuizController = ({
             </div>
           )}
 
-          {/* QUIZ CARD */}
-          <div className="grow">
-            <QuizCard
-              mode={state.mode}
-              data={currentQuestion}
-              isSubmitted={state.isSubmitted}
-              selectedAnswer={state.answers[state.currentIdx]}
-              onAnswer={onSelectAnswer}
-            />
+          {/* QUIZ CARD - grows to fill space */}
+          <div className="flex-1 flex items-center justify-center min-h-0">
+            <div className="w-full h-full max-h-[70vh] overflow-hidden">
+              <QuizCard
+                mode={state.mode}
+                data={currentQuestion}
+                isSubmitted={state.isSubmitted}
+                selectedAnswer={state.answers[state.currentIdx]}
+                onAnswer={onSelectAnswer}
+              />
+            </div>
           </div>
 
-          {/* BOTTOM CONTROLS */}
-          <div className="flex items-center justify-between gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+          {/* BOTTOM CONTROLS - pinned at bottom */}
+          <div className="flex-shrink-0 flex items-center justify-between gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
             {/* Previous Button */}
             <button
               disabled={state.currentIdx === 0}

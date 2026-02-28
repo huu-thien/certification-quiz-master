@@ -1,10 +1,11 @@
 import type { CourseConfig, Question } from "../../types";
-import { questionsChapter1 } from "../chapter1";
-import { questionsChapter2 } from "../chapter2";
-import { questionsChapter3 } from "../chapter3";
-import { questionsChapter4 } from "../chapter4";
-import { questionsChapter5 } from "../chapter5";
-import { questionsChapter6 } from "../chapter6";
+import { questionsISTQB } from "../istqb";
+import { questionsPSM1 } from "../psm1";
+import {
+  EXAM_CONFIGS,
+  ExamType,
+  getMinCorrectAnswers,
+} from "../../constants/exam-config";
 
 // ISTQB Foundation Configuration
 export const ISTQB_CHAPTERS: Record<number, string> = {
@@ -16,27 +17,20 @@ export const ISTQB_CHAPTERS: Record<number, string> = {
   6: "Test Tools",
 };
 
-export const ISTQB_QUESTIONS: Question[] = [
-  ...questionsChapter1,
-  ...questionsChapter2,
-  ...questionsChapter3,
-  ...questionsChapter4,
-  ...questionsChapter5,
-  ...questionsChapter6,
-];
+export const ISTQB_QUESTIONS: Question[] = [...questionsISTQB];
 
 export const istqbConfig: CourseConfig = {
   id: "istqb",
-  name: "ISTQB Foundation",
+  name: EXAM_CONFIGS[ExamType.ISTQB_FOUNDATION].name,
   description: "ISTQB Certified Tester Foundation Level",
   totalQuestions: ISTQB_QUESTIONS.length,
-  examDuration: 3600, // 60 minutes
-  passingScore: 26,
+  examDuration: EXAM_CONFIGS[ExamType.ISTQB_FOUNDATION].duration,
+  passingScore: getMinCorrectAnswers(ExamType.ISTQB_FOUNDATION),
   chapters: ISTQB_CHAPTERS,
+  examQuestionsCount: EXAM_CONFIGS[ExamType.ISTQB_FOUNDATION].questionsCount,
 };
 
-// PSM1 Configuration (Template - thêm câu hỏi sau)
-export const PSM1_QUESTIONS: Question[] = [];
+export const PSM1_QUESTIONS: Question[] = [...questionsPSM1];
 
 export const PSM1_CHAPTERS: Record<number, string> = {
   1: "Scrum Framework",
@@ -47,12 +41,13 @@ export const PSM1_CHAPTERS: Record<number, string> = {
 
 export const psm1Config: CourseConfig = {
   id: "psm1",
-  name: "Professional Scrum Master I",
+  name: EXAM_CONFIGS[ExamType.PSM1].name,
   description: "Scrum Master Certification (PSM I)",
   totalQuestions: PSM1_QUESTIONS.length,
-  examDuration: 3600,
-  passingScore: 60,
+  examDuration: EXAM_CONFIGS[ExamType.PSM1].duration,
+  passingScore: getMinCorrectAnswers(ExamType.PSM1),
   chapters: PSM1_CHAPTERS,
+  examQuestionsCount: EXAM_CONFIGS[ExamType.PSM1].questionsCount,
 };
 
 // Course Registry
@@ -81,7 +76,7 @@ export const getQuestionsByCourse = (courseId: string): Question[] => {
 
 export const getQuestionsByChapterAndCourse = (
   courseId: string,
-  chapterId: number
+  chapterId: number,
 ): Question[] => {
   const questions = getQuestionsByCourse(courseId);
   const filtered = questions.filter((q) => q.chapter === chapterId);
@@ -96,9 +91,12 @@ export const getAvailableChaptersByCourse = (courseId: string): number[] => {
 
 export const getRandomExamQuestions = (
   courseId: string,
-  count?: number
+  count?: number,
 ): Question[] => {
   const questions = getQuestionsByCourse(courseId);
-  const examCount = count || getCourseConfig(courseId)?.totalQuestions || 40;
+  const config = getCourseConfig(courseId);
+
+  const examCount = count || config?.examQuestionsCount || 40;
+
   return [...questions].sort(() => Math.random() - 0.5).slice(0, examCount);
 };
