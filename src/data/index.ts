@@ -6,6 +6,24 @@ import { questionsChapter4 } from "./chapter4";
 import { questionsChapter5 } from "./chapter5";
 import { questionsChapter6 } from "./chapter6";
 
+// Re-export courses and configs
+export {
+  ISTQB_CHAPTERS,
+  ISTQB_QUESTIONS,
+  istqbConfig,
+  PSM1_CHAPTERS,
+  PSM1_QUESTIONS,
+  psm1Config,
+  COURSES,
+  getCourseConfig,
+  getAllCourses,
+  getQuestionsByCourse,
+  getQuestionsByChapterAndCourse,
+  getAvailableChaptersByCourse,
+  getRandomExamQuestions,
+} from "./courses";
+
+// Legacy exports for backward compatibility
 export const CHAPTER_TITLES: Record<number, string> = {
   1: "Fundamentals of Testing",
   2: "Testing throughout the SDLC",
@@ -33,6 +51,8 @@ export const getAvailableChapters = (): number[] => {
   const chapters = allQuestions.map((q) => q.chapter);
   return Array.from(new Set(chapters)).sort((a, b) => a - b);
 };
-export const getRandomExamQuestions = (count: number = 40): Question[] => {
+
+// Get random questions from all courses (for backward compatibility)
+export const getRandomExamQuestionsLegacy = (count: number = 40): Question[] => {
   return [...allQuestions].sort(() => Math.random() - 0.5).slice(0, count);
 };
