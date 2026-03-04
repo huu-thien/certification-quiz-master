@@ -1,11 +1,15 @@
 import { useState, useCallback, useMemo } from "react";
 import type { FlashcardState, Flashcard } from "../types";
-import { istqbFlashcards } from "../data";
+import { istqbFlashcards, psm1Flashcards } from "../data";
 
 // Mock flashcard getter - will import real data when available
 const getFlashcardsByCourse = (courseId: string): Flashcard[] => {
   if (courseId === "istqb") {
     return istqbFlashcards as Flashcard[];
+  }
+  if (courseId === "psm1") {
+    // placeholder – returns whatever the user defines in psm1/flashcards.ts
+    return psm1Flashcards as Flashcard[];
   }
   return [];
 };
@@ -40,6 +44,13 @@ export const useFlashcardState = () => {
       // All chapters
       flashcards = getFlashcardsByCourse(courseId);
     }
+
+    // debug log
+    console.log("startReview", {
+      courseId,
+      chapterId,
+      count: flashcards.length,
+    });
 
     setState((prev) => ({
       ...prev,
@@ -83,11 +94,13 @@ export const useFlashcardState = () => {
 
   const markAnswer = useCallback(
     (answer: "know" | "unknown") => {
-      setState((prev) => ({
-        ...prev,
-        answers: { ...prev.answers, [prev.currentIdx]: answer },
-        isFlipped: false,
-      }));
+      setState((prev) => {
+        const card = prev.flashcards[prev.currentIdx];
+        const id = card?.id;
+        const nextAnswers = { ...prev.answers };
+        if (id) nextAnswers[id] = answer;
+        return { ...prev, answers: nextAnswers, isFlipped: false };
+      });
       goToNext();
     },
     [goToNext],

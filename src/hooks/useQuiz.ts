@@ -71,10 +71,43 @@ export const useQuizState = () => {
   }, []);
 
   const selectAnswer = useCallback((answer: number) => {
-    setState((prev) => ({
-      ...prev,
-      answers: { ...prev.answers, [prev.currentIdx]: answer },
-    }));
+    setState((prev) => {
+      const currentQuestion = prev.questions[prev.currentIdx];
+
+      // Multi-select: toggle answer in array
+      if (currentQuestion?.isMultiSelect) {
+        const currentAnswers = prev.answers[prev.currentIdx];
+        const answers = Array.isArray(currentAnswers)
+          ? [...currentAnswers]
+          : [];
+
+        const idx = answers.indexOf(answer);
+        if (idx >= 0) {
+          answers.splice(idx, 1); // remove
+        } else {
+          answers.push(answer); // add
+        }
+        answers.sort((a, b) => a - b);
+
+        const newAnswers = { ...prev.answers };
+        if (answers.length > 0) {
+          newAnswers[prev.currentIdx] = answers;
+        } else {
+          delete newAnswers[prev.currentIdx]; // Remove key if empty
+        }
+
+        return {
+          ...prev,
+          answers: newAnswers,
+        };
+      }
+
+      // Single-select: set single answer
+      return {
+        ...prev,
+        answers: { ...prev.answers, [prev.currentIdx]: answer },
+      };
+    });
   }, []);
 
   const goToQuestion = useCallback((index: number) => {
@@ -103,10 +136,29 @@ export const useQuizState = () => {
   }, [state.questions, state.currentIdx]);
 
   const score = useMemo(() => {
-    return Object.keys(state.answers).filter(
-      (k) =>
-        state.answers[Number(k)] === state.questions[Number(k)]?.correctAnswer,
-    ).length;
+    return Object.keys(state.answers).filter((k) => {
+      const qIdx = Number(k);
+      const question = state.questions[qIdx];
+      const userAnswer = state.answers[qIdx];
+
+      if (!question) return false;
+
+      // Multi-select comparison
+      if (question.isMultiSelect && question.correctAnswers) {
+        const userAnswers = Array.isArray(userAnswer)
+          ? userAnswer.sort((a, b) => a - b)
+          : [];
+        const correctAnswers = [...question.correctAnswers].sort(
+          (a, b) => a - b,
+        );
+
+        if (userAnswers.length !== correctAnswers.length) return false;
+        return userAnswers.every((ans, i) => ans === correctAnswers[i]);
+      }
+
+      // Single-select comparison
+      return userAnswer === question.correctAnswer;
+    }).length;
   }, [state.answers, state.questions]);
 
   const courseConfig = getCourseConfig(state.courseId);

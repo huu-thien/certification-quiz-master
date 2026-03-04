@@ -18,7 +18,7 @@ export {
 } from "./courses";
 
 // Re-export flashcards
-export { istqbFlashcards } from "./courses";
+export { istqbFlashcards, psm1Flashcards } from "./courses";
 
 // Legacy exports for backward compatibility
 export const CHAPTER_TITLES: Record<number, string> = {

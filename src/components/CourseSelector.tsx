@@ -11,7 +11,7 @@ export const CourseSelector = ({
   onSelectCourse,
 }: CourseSelectorProps) => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-yellow-50 via-white to-green-50 p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-50 via-white to-pink-50 p-6">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-indigo-900 mb-2">
           Chọn Bộ Thi

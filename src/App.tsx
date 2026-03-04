@@ -4,6 +4,7 @@ import QuizModePage from "./pages/QuizModePage.tsx";
 import PracticePage from "./pages/PracticePage.tsx";
 import ExamPage from "./pages/ExamPage.tsx";
 import FlashcardPage from "./pages/FlashcardPage.tsx";
+import NotFoundPage from "./pages/NotFoundPage.tsx";
 
 export default function App() {
   return (
@@ -26,6 +27,8 @@ export default function App() {
 
         {/* Flashcard Mode */}
         <Route path="/flashcard/:courseId" element={<FlashcardPage />} />
+        {/* Catch‑all 404 */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

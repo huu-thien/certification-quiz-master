@@ -1,12 +1,30 @@
 import type { CourseConfig, Question } from "../../types";
 import { questionsISTQB } from "./istqb/questions";
-import { questionsPSM1 } from "./psm1/questions";
-import { allFlashcards } from "./istqb/flashcards";
+import { questionsPSM1, type QuestionPSM1 } from "./psm1/questions";
+// flashcard data for courses.  we export the arrays below so other
+// modules can import them without needing to know the exact file path.
+// `istqb/flashcards.ts` defines `allFlashcards`, so alias it here for
+// backwards compatibility with the rest of the codebase.
+export { allFlashcards as istqbFlashcards } from "./istqb/flashcards";
+export { psm1Flashcards } from "./psm1/flashcards"; // may be empty until defined by user
 import {
   EXAM_CONFIGS,
   ExamType,
   getMinCorrectAnswers,
 } from "../../constants/exam-config";
+
+// Convert PSM1 questions to unified Question interface
+const convertPSM1toQuestion = (q: QuestionPSM1): Question => ({
+  id: q.id,
+  chapter: q.chapter,
+  question: q.question,
+  options: q.options || [],
+  correctAnswer: q.correctAnswer,
+  correctAnswers: q.correctAnswers,
+  isMultiSelect: q.isMultiSelect,
+  explanation: q.explanation,
+  explanationVN: q.explanationVN,
+});
 
 // ISTQB Foundation Configuration
 export const ISTQB_CHAPTERS: Record<number, string> = {
@@ -31,13 +49,20 @@ export const istqbConfig: CourseConfig = {
   examQuestionsCount: EXAM_CONFIGS[ExamType.ISTQB_FOUNDATION].questionsCount,
 };
 
-export const PSM1_QUESTIONS: Question[] = [...questionsPSM1];
+export const PSM1_QUESTIONS: Question[] = questionsPSM1.map(
+  convertPSM1toQuestion,
+);
 
+// For PSM1 we use the chapter field as the practice test number.  Users expect
+// to see "Practice 1", "Practice 2", etc.  We also expose six entries here so
+// the selectors render something meaningful when course.chapters is interrogated.
 export const PSM1_CHAPTERS: Record<number, string> = {
-  1: "Scrum Framework",
-  2: "The Team",
-  3: "Events",
-  4: "Artifacts",
+  1: "Practice Test 1",
+  2: "Practice Test 2",
+  3: "Practice Test 3",
+  4: "Practice Test 4",
+  5: "Practice Test 5",
+  6: "Practice Test 6",
 };
 
 export const psm1Config: CourseConfig = {
@@ -87,7 +112,15 @@ export const getQuestionsByChapterAndCourse = (
 export const getAvailableChaptersByCourse = (courseId: string): number[] => {
   const questions = getQuestionsByCourse(courseId);
   const chapters = questions.map((q) => q.chapter);
-  return Array.from(new Set(chapters)).sort((a, b) => a - b);
+  const unique = Array.from(new Set(chapters));
+
+  if (courseId === "psm1") {
+    // For PSM1 we want the practice tests to be presented in random order
+    // each time the selector is shown.  Random sort in-place.
+    return unique.sort(() => Math.random() - 0.5);
+  }
+
+  return unique.sort((a, b) => a - b);
 };
 
 export const getRandomExamQuestions = (
@@ -101,6 +134,3 @@ export const getRandomExamQuestions = (
 
   return [...questions].sort(() => Math.random() - 0.5).slice(0, examCount);
 };
-
-// Export flashcards
-export { allFlashcards as istqbFlashcards };

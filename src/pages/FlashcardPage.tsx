@@ -35,7 +35,7 @@ export default function FlashcardPage() {
 
   if (!course) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="h-screen flex items-center justify-center">
         <p className="text-xl text-red-600">Khóa học không tồn tại</p>
       </div>
     );
@@ -77,6 +77,7 @@ export default function FlashcardPage() {
         resetReview();
         setSelectedChapter(null);
       }}
+      onRestart={() => startReview(courseId || "", state.selectedChapter)}
     />
   );
 }

@@ -17,7 +17,7 @@ export const FlashcardChapterSelector = ({
   const chapters = Object.entries(course.chapters);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 p-6">
+    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-50 via-white to-pink-50 p-6 overflow-hidden">
       {/* Header */}
       <div className="text-center mb-12 max-w-2xl">
         <div className="flex items-center justify-center gap-3 mb-4">
@@ -27,13 +27,21 @@ export const FlashcardChapterSelector = ({
           </h1>
         </div>
         <p className="text-gray-600 text-lg">
-          Chọn chương muốn ôn tập: <strong>{course.name}</strong>
+          {course.id === "psm1"
+            ? "Chọn practice test muốn ôn tập:"
+            : "Chọn chương muốn ôn tập:"}{" "}
+          <strong>{course.name}</strong>
         </p>
       </div>
 
       {/* Chapters Grid */}
       <div className="w-full max-w-4xl">
         {/* All Chapters Button */}
+        {chapters.length === 0 && (
+          <p className="text-center text-gray-500 mb-4">
+            Không có chương nào để hiển thị.
+          </p>
+        )}
         <button
           onClick={onSelectAll}
           className="w-full mb-6 p-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all text-white group"
@@ -54,7 +62,9 @@ export const FlashcardChapterSelector = ({
         {/* Or Divider */}
         <div className="flex items-center gap-4 mb-8 opacity-50">
           <div className="flex-1 h-px bg-gray-300"></div>
-          <span className="text-gray-500 font-semibold">HOẶC CHỌN CHƯƠNG</span>
+          <span className="text-gray-500 font-semibold">
+            HOẶC {course.id === "psm1" ? "CHỌN PRACTICE" : "CHỌN CHƯƠNG"}
+          </span>
           <div className="flex-1 h-px bg-gray-300"></div>
         </div>
 
@@ -72,7 +82,9 @@ export const FlashcardChapterSelector = ({
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-800 group-hover:text-purple-600 transition-colors">
-                    Chương {chapterId}
+                    {course.id === "psm1"
+                      ? `Practice ${chapterId}`
+                      : `Chương ${chapterId}`}
                   </h3>
                 </div>
               </div>

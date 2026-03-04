@@ -47,7 +47,8 @@ export const QuizController = ({
   if (state.mode === "exam") {
     headerTitle = `Thi thử ${courseConfig?.name || ""}`;
   } else if (state.mode === "practice" && currentChapter && courseConfig) {
-    headerTitle = `Ôn tập Chương ${currentChapter}: ${
+    const labelPrefix = courseConfig.id === "psm1" ? "Practice" : "Chương";
+    headerTitle = `Ôn tập ${labelPrefix} ${currentChapter}: ${
       courseConfig.chapters[currentChapter] || "Unknown"
     }`;
   }

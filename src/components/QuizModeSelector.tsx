@@ -31,29 +31,37 @@ export const QuizModeSelector = ({
         </h1>
         <p className="text-gray-600">
           {isSelectingChapter
-            ? "Chọn chương bạn muốn ôn tập"
+            ? course.id === "psm1"
+              ? "Chọn practice test bạn muốn ôn tập"
+              : "Chọn chương bạn muốn ôn tập"
             : course.description}
         </p>
       </div>
 
       {isSelectingChapter ? (
-        // Chapter Selection Screen
+        // Practice/Chapter Selection Screen
         <div className="w-full max-w-2xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {chapters.map((chapterId) => (
-              <button
-                key={chapterId}
-                onClick={() => onStartPractice(chapterId)}
-                className="flex flex-col items-start p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-blue-500 hover:shadow-md transition-all text-left cursor-pointer"
-              >
-                <span className="text-xl font-bold text-gray-800">
-                  Chương {chapterId}
-                </span>
-                <span className="text-sm text-gray-500 mt-1">
-                  {course.chapters[chapterId] || "Chưa có tiêu đề"}
-                </span>
-              </button>
-            ))}
+            {chapters.map((chapterId) => {
+              const label =
+                course.id === "psm1"
+                  ? `Practice ${chapterId}`
+                  : `Chương ${chapterId}`;
+              return (
+                <button
+                  key={chapterId}
+                  onClick={() => onStartPractice(chapterId)}
+                  className="flex flex-col items-start p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-blue-500 hover:shadow-md transition-all text-left cursor-pointer"
+                >
+                  <span className="text-xl font-bold text-gray-800">
+                    {label}
+                  </span>
+                  <span className="text-sm text-gray-500 mt-1">
+                    {course.chapters[chapterId] || "Chưa có tiêu đề"}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           <div className="mt-6 flex gap-3">
@@ -79,7 +87,9 @@ export const QuizModeSelector = ({
               </div>
               <h2 className="text-2xl font-bold text-gray-800">Luyện tập</h2>
               <p className="text-gray-500 mt-2 text-center">
-                Học theo từng chương, có giải thích chi tiết ngay lập tức.
+                {course.id === "psm1"
+                  ? "Học theo từng practice test, có giải thích chi tiết ngay lập tức."
+                  : "Học theo từng chương, có giải thích chi tiết ngay lập tức."}
               </p>
             </button>
 

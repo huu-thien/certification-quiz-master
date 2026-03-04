@@ -3,9 +3,11 @@ export interface Question {
   chapter: number;
   question: string;
   options: string[];
-  correctAnswer: number;
-  explanation: string;
-  explanationVN: string;
+  correctAnswer?: number; // single-select answer
+  correctAnswers?: number[]; // multi-select answers
+  isMultiSelect?: boolean;
+  explanation?: string;
+  explanationVN?: string;
 }
 
 export interface CourseConfig {
@@ -27,7 +29,7 @@ export interface QuizState {
   mode: QuizMode;
   courseId: string;
   currentIdx: number;
-  answers: Record<number, number>;
+  answers: Record<number, number | number[]>; // single or multiple answers
   isSubmitted: boolean;
   questions: Question[];
   selectedChapter?: number;
@@ -43,9 +45,9 @@ export interface Flashcard {
 export interface FlashcardState {
   mode: "idle" | "reviewing";
   courseId: string;
-  currentIdx: number;
+  currentIdx: number; // index into the full flashcards array
   isFlipped: boolean;
-  answers: Record<number, "know" | "unknown">;
-  flashcards: Flashcard[];
+  answers: Record<string, "know" | "unknown">; // keyed by flashcard.id
+  flashcards: Flashcard[]; // full list for the course/chapter
   selectedChapter?: number;
 }

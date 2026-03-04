@@ -1,7 +1,7 @@
 interface QuestionNavigatorProps {
   total: number;
   currentIdx: number;
-  answers: Record<number, number>;
+  answers: Record<number, number | number[]>;
   onSelect: (index: number) => void;
 }
 export const QuestionNavigator = ({

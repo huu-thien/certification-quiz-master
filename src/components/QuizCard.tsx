@@ -1,4 +1,4 @@
-import { Lightbulb, CheckCircle2, XCircle, Circle } from "lucide-react";
+import { Lightbulb, CheckCircle2, XCircle, Circle, Check } from "lucide-react";
 import type { Question } from "../types";
 import type { QuizModeKey } from "../constants";
 
@@ -6,7 +6,7 @@ interface QuizCardProps {
   mode: QuizModeKey;
   data: Question;
   isSubmitted: boolean;
-  selectedAnswer?: number;
+  selectedAnswer?: number | number[];
   onAnswer: (ans: number) => void;
 }
 
@@ -21,6 +21,12 @@ export const QuizCard = ({
     mode === "practice" ? selectedAnswer !== undefined : isSubmitted;
   const getLabel = (i: number) => `${String.fromCharCode(65 + i)}.`;
 
+  // Multi-select helpers
+  const isMultiSelect = data.isMultiSelect;
+  const selectedAnswers = Array.isArray(selectedAnswer) ? selectedAnswer : [];
+  const correctAnswers = isMultiSelect ? data.correctAnswers || [] : [];
+  const singleCorrectAnswer = !isMultiSelect ? data.correctAnswer : undefined;
+
   return (
     <div className="w- h-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100 flex flex-col">
       {/* scrollable container contains question, options and explanation */}
@@ -29,9 +35,21 @@ export const QuizCard = ({
           {data.question}
         </h2>
 
+        {isMultiSelect && (
+          <p className="text-sm font-medium text-orange-600 bg-orange-50 px-3 py-2 rounded-lg mb-4">
+            ⚠️ Choose all correct answers
+          </p>
+        )}
+
         {data.options.map((opt: string, i: number) => {
-          const isCorrect = i === data.correctAnswer;
-          const isSelected = i === selectedAnswer;
+          // Multi-select logic
+          const isSelected = isMultiSelect
+            ? selectedAnswers.includes(i)
+            : selectedAnswer === i;
+          const isCorrect = isMultiSelect
+            ? correctAnswers.includes(i)
+            : i === singleCorrectAnswer;
+
           let baseClass =
             "w-full p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 font-medium cursor-pointer";
 
@@ -56,6 +74,22 @@ export const QuizCard = ({
               if (isSelected && !isCorrect)
                 return <XCircle className="w-6 h-6 shrink-0 text-red-600" />;
             }
+
+            // Checkbox or Radio icon
+            if (isMultiSelect) {
+              return (
+                <div
+                  className={`w-6 h-6 shrink-0 border-2 rounded flex items-center justify-center ${
+                    isSelected
+                      ? "border-blue-600 bg-blue-600"
+                      : "border-gray-300 bg-white"
+                  }`}
+                >
+                  {isSelected && <Check className="w-4 h-4 text-white" />}
+                </div>
+              );
+            }
+
             return (
               <Circle
                 className={`w-6 h-6 shrink-0 ${
@@ -90,9 +124,15 @@ export const QuizCard = ({
             </div>
 
             <p className="text-gray-800 leading-relaxed font-medium text-lg">
-              {data.explanationVN}
+              {/* explanationVN is preferred, but if absent (as is common in PSM1)
+                  fall back to the English explanation so the user still sees
+                  something useful. */}
+              {data.explanationVN || data.explanation}
             </p>
 
+            {/* only show the "Reference (English)" block when we have both
+                a Vietnamese explanation *and* an English one, otherwise the
+                fallback above already handles displaying english text. */}
             {data.explanationVN && data.explanation && (
               <div className="mt-5 pt-4 border-t border-blue-200">
                 <p className="text-xs text-blue-600 font-bold uppercase mb-1">
