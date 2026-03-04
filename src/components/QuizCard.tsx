@@ -31,7 +31,7 @@ export const QuizCard = ({
     <div className="w- h-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100 flex flex-col">
       {/* scrollable container contains question, options and explanation */}
       <div className="flex-1 space-y-3 overflow-y-auto custom-scrollbar pr-2">
-        <h2 className="text-xl font-bold text-gray-800 mb-6">
+        <h2 className="text-xl font-bold text-gray-700 mb-6">
           {data.question}
         </h2>
 
@@ -123,7 +123,7 @@ export const QuizCard = ({
               </h3>
             </div>
 
-            <p className="text-gray-800 leading-relaxed font-medium text-lg">
+            <p className="text-gray-700 leading-relaxed font-medium text-base">
               {/* explanationVN is preferred, but if absent (as is common in PSM1)
                   fall back to the English explanation so the user still sees
                   something useful. */}

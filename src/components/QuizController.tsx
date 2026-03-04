@@ -104,7 +104,7 @@ export const QuizController = ({
                 <BookOpen size={20} />
               </div>
               <div>
-                <h1 className="font-bold text-gray-800">{headerTitle}</h1>
+                <h1 className="font-bold text-gray-700">{headerTitle}</h1>
                 <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">
                   {state.mode === "exam" ? "Mock Exam Mode" : "Practice Mode"}
                 </p>
