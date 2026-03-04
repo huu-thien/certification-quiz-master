@@ -1,6 +1,7 @@
 import type { CourseConfig, Question } from "../../types";
-import { questionsISTQB } from "../istqb";
-import { questionsPSM1 } from "../psm1";
+import { questionsISTQB } from "./istqb/questions";
+import { questionsPSM1 } from "./psm1/questions";
+import { allFlashcards } from "./istqb/flashcards";
 import {
   EXAM_CONFIGS,
   ExamType,
@@ -100,3 +101,6 @@ export const getRandomExamQuestions = (
 
   return [...questions].sort(() => Math.random() - 0.5).slice(0, examCount);
 };
+
+// Export flashcards
+export { allFlashcards as istqbFlashcards };

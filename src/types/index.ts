@@ -21,7 +21,7 @@ export interface CourseConfig {
   };
 }
 
-export type QuizMode = "idle" | "practice" | "exam";
+export type QuizMode = "idle" | "practice" | "exam" | "flashcard";
 
 export interface QuizState {
   mode: QuizMode;
@@ -30,5 +30,22 @@ export interface QuizState {
   answers: Record<number, number>;
   isSubmitted: boolean;
   questions: Question[];
+  selectedChapter?: number;
+}
+
+export interface Flashcard {
+  id: string;
+  chapter: number;
+  term: string;
+  definition: string;
+}
+
+export interface FlashcardState {
+  mode: "idle" | "reviewing";
+  courseId: string;
+  currentIdx: number;
+  isFlipped: boolean;
+  answers: Record<number, "know" | "unknown">;
+  flashcards: Flashcard[];
   selectedChapter?: number;
 }

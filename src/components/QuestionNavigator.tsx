@@ -34,7 +34,7 @@ export const QuestionNavigator = ({
             <button
               key={i}
               onClick={() => onSelect(i)}
-              className={`w-full aspect-square rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center ${getButtonClass(
+              className={`w-full aspect-square rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center cursor-pointer ${getButtonClass(
                 i,
               )}`}
             >

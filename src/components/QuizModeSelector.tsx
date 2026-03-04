@@ -1,4 +1,4 @@
-import { BookOpen, Trophy } from "lucide-react";
+import { BookOpen, Trophy, Lightbulb } from "lucide-react";
 import type { CourseConfig } from "../types";
 import { getAvailableChaptersByCourse } from "../data";
 
@@ -7,6 +7,7 @@ interface QuizModeSelectorProps {
   isSelectingChapter: boolean;
   onStartPractice: (chapterId: number) => void;
   onStartExam: () => void;
+  onStartFlashcard?: (chapterId?: number) => void;
   onBack: () => void;
   onSelectCourse: () => void;
 }
@@ -16,6 +17,7 @@ export const QuizModeSelector = ({
   isSelectingChapter,
   onStartPractice,
   onStartExam,
+  onStartFlashcard,
   onBack,
   onSelectCourse,
 }: QuizModeSelectorProps) => {
@@ -42,7 +44,7 @@ export const QuizModeSelector = ({
               <button
                 key={chapterId}
                 onClick={() => onStartPractice(chapterId)}
-                className="flex flex-col items-start p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-blue-500 hover:shadow-md transition-all text-left"
+                className="flex flex-col items-start p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-blue-500 hover:shadow-md transition-all text-left cursor-pointer"
               >
                 <span className="text-xl font-bold text-gray-800">
                   Chương {chapterId}
@@ -57,7 +59,7 @@ export const QuizModeSelector = ({
           <div className="mt-6 flex gap-3">
             <button
               onClick={onBack}
-              className="flex-1 px-4 py-2 text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+              className="flex-1 px-4 py-2 text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors font-medium cursor-pointer"
             >
               Quay lại
             </button>
@@ -66,11 +68,11 @@ export const QuizModeSelector = ({
       ) : (
         // Mode and Course Selection Screen
         <div className="w-full max-w-4xl">
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
             {/* Practice Mode */}
             <button
               onClick={onSelectCourse}
-              className="group flex flex-col items-center p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-blue-500 hover:shadow-2xl hover:scale-105 transform transition-all"
+              className="group flex flex-col items-center p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-blue-500 hover:shadow-2xl hover:scale-105 transform transition-all cursor-pointer"
             >
               <div className="p-4 bg-blue-100 text-blue-600 rounded-full mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                 <BookOpen size={40} />
@@ -84,7 +86,7 @@ export const QuizModeSelector = ({
             {/* Exam Mode */}
             <button
               onClick={onStartExam}
-              className="group flex flex-col items-center p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-yellow-500 hover:shadow-2xl hover:scale-105 transform transition-all"
+              className="group flex flex-col items-center p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-yellow-500 hover:shadow-2xl hover:scale-105 transform transition-all cursor-pointer"
             >
               <div className="p-4 bg-yellow-100 text-yellow-600 rounded-full mb-4 group-hover:bg-yellow-600 group-hover:text-white transition-colors">
                 <Trophy size={40} />
@@ -94,13 +96,27 @@ export const QuizModeSelector = ({
                 Bắt đầu tính thời gian và làm bài như thi thật
               </p>
             </button>
+
+            {/* Flashcard Mode */}
+            <button
+              onClick={() => onStartFlashcard?.()}
+              className="group flex flex-col items-center p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-green-500 hover:shadow-2xl hover:scale-105 transform transition-all cursor-pointer"
+            >
+              <div className="p-4 bg-green-100 text-green-600 rounded-full mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                <Lightbulb size={40} />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800">Thẻ ghi nhớ</h2>
+              <p className="text-gray-500 mt-2 text-center">
+                Ôn tập với flashcard và đánh dấu khái niệm đã biết
+              </p>
+            </button>
           </div>
 
           {/* Back button */}
           <div className="text-center">
             <button
               onClick={onBack}
-              className="text-gray-400 hover:text-gray-600 underline font-medium"
+              className="text-gray-400 hover:text-gray-600 underline font-medium cursor-pointer"
             >
               Quay lại chọn bộ thi
             </button>

@@ -1,5 +1,4 @@
 import type { Question } from "../types";
-import { questionsISTQB } from "./istqb";
 
 // Re-export courses and configs
 export {
@@ -18,6 +17,9 @@ export {
   getRandomExamQuestions,
 } from "./courses";
 
+// Re-export flashcards
+export { istqbFlashcards } from "./courses";
+
 // Legacy exports for backward compatibility
 export const CHAPTER_TITLES: Record<number, string> = {
   1: "Fundamentals of Testing",
@@ -28,7 +30,9 @@ export const CHAPTER_TITLES: Record<number, string> = {
   6: "Test Tools",
 };
 
-export const allQuestions: Question[] = [...questionsISTQB];
+// Import for legacy support
+import { ISTQB_QUESTIONS } from "./courses";
+export const allQuestions: Question[] = [...ISTQB_QUESTIONS];
 
 export const getQuestionsByChapter = (chapterId: number): Question[] => {
   const filtered = allQuestions.filter((q) => q.chapter === chapterId);

@@ -27,7 +27,7 @@ export const CourseSelector = ({
             <button
               key={course.id}
               onClick={() => onSelectCourse(course)}
-              className="group flex flex-col p-6 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-indigo-500 hover:shadow-2xl transition-all text-left hover:scale-105 transform"
+              className="group flex flex-col p-6 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-indigo-500 hover:shadow-2xl transition-all text-left hover:scale-105 transform cursor-pointer"
             >
               <div className="p-3 bg-indigo-100 text-indigo-600 rounded-full mb-4 w-fit group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                 <PackageOpen size={32} />

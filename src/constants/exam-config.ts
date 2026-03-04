@@ -9,6 +9,7 @@ export const QuizMode = {
   IDLE: "idle",
   PRACTICE: "practice",
   EXAM: "exam",
+  FLASHCARD: "flashcard",
 } as const;
 
 export type QuizModeKey = (typeof QuizMode)[keyof typeof QuizMode];

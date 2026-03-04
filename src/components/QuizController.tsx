@@ -88,7 +88,7 @@ export const QuizController = ({
             <div className="flex items-center gap-3">
               <button
                 onClick={handleBack}
-                className="flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors font-medium hover:bg-red-50 p-2 rounded-lg"
+                className="flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors font-medium hover:bg-red-50 p-2 rounded-lg cursor-pointer"
                 aria-label={state.isSubmitted ? "Back to home" : "Back"}
               >
                 <RotateCcw size={18} />
@@ -167,7 +167,7 @@ export const QuizController = ({
             <button
               disabled={state.currentIdx === 0}
               onClick={onGoToPrevious}
-              className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 disabled:opacity-30 transition-all font-medium"
+              className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 disabled:opacity-30 transition-all font-medium cursor-pointer"
             >
               <ArrowLeft size={18} /> Trước
             </button>
@@ -179,7 +179,7 @@ export const QuizController = ({
               <button
                 onClick={onSubmitExam}
                 disabled={!isAllAnswered}
-                className={`flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl shadow-lg transition-all font-bold ${
+                className={`flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl shadow-lg transition-all font-bold cursor-pointer ${
                   isAllAnswered
                     ? "bg-green-600 hover:bg-green-700 animate-pulse text-white"
                     : "bg-gray-300 text-gray-400 cursor-not-allowed"
@@ -192,7 +192,7 @@ export const QuizController = ({
               <button
                 disabled={state.currentIdx === state.questions.length - 1}
                 onClick={onGoToNext}
-                className="flex items-center justify-center gap-2 flex-1 px-4 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 disabled:opacity-30 transition-all font-bold"
+                className="flex items-center justify-center gap-2 flex-1 px-4 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 disabled:opacity-30 transition-all font-bold cursor-pointer"
               >
                 Sau <ArrowRight size={18} />
               </button>

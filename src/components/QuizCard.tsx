@@ -1,8 +1,9 @@
 import { Lightbulb, CheckCircle2, XCircle, Circle } from "lucide-react";
 import type { Question } from "../types";
+import type { QuizModeKey } from "../constants";
 
 interface QuizCardProps {
-  mode: "practice" | "exam" | "idle";
+  mode: QuizModeKey;
   data: Question;
   isSubmitted: boolean;
   selectedAnswer?: number;
@@ -32,7 +33,7 @@ export const QuizCard = ({
           const isCorrect = i === data.correctAnswer;
           const isSelected = i === selectedAnswer;
           let baseClass =
-            "w-full p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 font-medium";
+            "w-full p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 font-medium cursor-pointer";
 
           if (showExplanation) {
             if (isCorrect)
