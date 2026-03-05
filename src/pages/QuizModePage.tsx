@@ -40,7 +40,7 @@ export default function QuizModePage() {
         }
       }}
       onBack={() => {
-        navigate("/");
+        navigate(-1);
       }}
       onSelectCourse={() => {
         setIsSelectingChapter(!isSelectingChapter);

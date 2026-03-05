@@ -18,8 +18,12 @@ export {
   getRandomExamQuestions,
 } from "./courses";
 
-// Re-export flashcards
-export { istqbFlashcards, psm1Flashcards } from "./courses";
+// Re-export flashcards + PSM1 section labels
+export {
+  istqbFlashcards,
+  psm1Flashcards,
+  PSM1_FLASHCARD_SECTIONS,
+} from "./courses";
 
 // Legacy exports for backward compatibility
 export const CHAPTER_TITLES: Record<number, string> = {

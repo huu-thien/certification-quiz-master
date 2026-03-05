@@ -1,5 +1,6 @@
-import { BookOpen, Lightbulb } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 import type { CourseConfig } from "../types";
+import { PSM1_FLASHCARD_SECTIONS } from "../data";
 
 interface FlashcardChapterSelectorProps {
   course: CourseConfig;
@@ -11,13 +12,15 @@ interface FlashcardChapterSelectorProps {
 export const FlashcardChapterSelector = ({
   course,
   onSelectChapter,
-  onSelectAll,
   onBack,
 }: FlashcardChapterSelectorProps) => {
-  const chapters = Object.entries(course.chapters);
+  const chapters =
+    course.id === "psm1"
+      ? Object.entries(PSM1_FLASHCARD_SECTIONS)
+      : Object.entries(course.chapters);
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-50 via-white to-pink-50 p-6 overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-50 via-white to-pink-50 p-4 sm:p-6">
       {/* Header */}
       <div className="text-center mb-12 max-w-2xl">
         <div className="flex items-center justify-center gap-3 mb-4">
@@ -28,7 +31,7 @@ export const FlashcardChapterSelector = ({
         </div>
         <p className="text-gray-600 text-lg">
           {course.id === "psm1"
-            ? "Chọn practice test muốn ôn tập:"
+            ? "Chọn phần Scrum Guide muốn ôn tập:"
             : "Chọn chương muốn ôn tập:"}{" "}
           <strong>{course.name}</strong>
         </p>
@@ -42,31 +45,6 @@ export const FlashcardChapterSelector = ({
             Không có chương nào để hiển thị.
           </p>
         )}
-        <button
-          onClick={onSelectAll}
-          className="w-full mb-6 p-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all text-white group"
-        >
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-white/20 rounded-full group-hover:bg-white/30 transition-colors">
-              <BookOpen size={28} />
-            </div>
-            <div className="text-left">
-              <h3 className="text-2xl font-bold">Ôn tập toàn bộ</h3>
-              <p className="text-white/80 text-sm">
-                Xem tất cả flashcard của khóa học này
-              </p>
-            </div>
-          </div>
-        </button>
-
-        {/* Or Divider */}
-        <div className="flex items-center gap-4 mb-8 opacity-50">
-          <div className="flex-1 h-px bg-gray-300"></div>
-          <span className="text-gray-500 font-semibold">
-            HOẶC {course.id === "psm1" ? "CHỌN PRACTICE" : "CHỌN CHƯƠNG"}
-          </span>
-          <div className="flex-1 h-px bg-gray-300"></div>
-        </div>
 
         {/* Chapters Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -83,7 +61,7 @@ export const FlashcardChapterSelector = ({
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-800 group-hover:text-purple-600 transition-colors">
                     {course.id === "psm1"
-                      ? `Practice ${chapterId}`
+                      ? `Phần ${chapterId}`
                       : `Chương ${chapterId}`}
                   </h3>
                 </div>

@@ -6,7 +6,10 @@ import { questionsPSM1, type QuestionPSM1 } from "./psm1/questions";
 // `istqb/flashcards.ts` defines `allFlashcards`, so alias it here for
 // backwards compatibility with the rest of the codebase.
 export { allFlashcards as istqbFlashcards } from "./istqb/flashcards";
-export { psm1Flashcards } from "./psm1/flashcards"; // may be empty until defined by user
+export {
+  psm1Flashcards,
+  PSM1_FLASHCARD_SECTIONS,
+} from "./psm1/flashcards"; // PSM1 flashcards + section labels
 import {
   EXAM_CONFIGS,
   ExamType,

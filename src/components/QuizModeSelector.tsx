@@ -6,6 +6,7 @@ import {
   getSubsectionsByChapterAndCourse,
   getQuestionsByChapterAndCourse,
 } from "../data";
+import { useNavigate } from "react-router-dom";
 
 interface QuizModeSelectorProps {
   course: CourseConfig;
@@ -27,6 +28,7 @@ export const QuizModeSelector = ({
   onSelectCourse,
 }: QuizModeSelectorProps) => {
   const chapters = getAvailableChaptersByCourse(course.id);
+  const navigate = useNavigate();
 
   // when ISTQB and user is in chapter selection mode, we may ask for
   // a subsection after the chapter is chosen.
@@ -66,16 +68,16 @@ export const QuizModeSelector = ({
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-50 via-white to-pink-50 p-8">
       <div className="text-center mb-12 max-w-3xl">
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-2 whitespace-nowrap">
+        <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-700 via-purple-600 to-pink-500 bg-clip-text text-transparent mb-2 whitespace-nowrap">
           {course.name}
         </h1>
-        <p className="text-gray-600">{subtitle}</p>
+        <p className="text-slate-600 text-base">{subtitle}</p>
       </div>
 
       {isSelectingChapter ? (
         // Practice/Chapter (and possibly subsection) selection screen
         <div className="w-full max-w-2xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {chosenChapter === null ? (
               // first show chapter/practice cards
               chapters.map((chapterId) => {
@@ -100,12 +102,17 @@ export const QuizModeSelector = ({
                         onStartPractice(chapterId);
                       }
                     }}
-                    className="group flex flex-col p-6 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-blue-500 hover:shadow-2xl transition-all text-left cursor-pointer"
+                    className="group flex flex-col p-6 bg-white/90 rounded-2xl shadow-md border border-transparent hover:border-blue-400 hover:shadow-xl transition-all text-left cursor-pointer hover:-translate-y-1"
                   >
-                    <span className="text-xl font-bold text-gray-800">
-                      {label}
-                    </span>
-                    <span className="text-sm text-gray-500 mt-1">
+                    <div className="flex items-start justify-between mb-3">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        {label}
+                      </span>
+                      <span className="text-[11px] font-medium text-slate-400 uppercase tracking-wide">
+                        {count} câu hỏi
+                      </span>
+                    </div>
+                    <span className="text-sm font-bold text-slate-600 leading-relaxed">
                       {subtitle}
                     </span>
                   </button>
@@ -117,12 +124,12 @@ export const QuizModeSelector = ({
                 <button
                   key="all"
                   onClick={() => onStartPractice(chosenChapter)}
-                  className="group flex flex-col p-6 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-blue-500 hover:shadow-2xl transition-all text-left cursor-pointer"
+                  className="group flex flex-col p-6 bg-gradient-to-r from-indigo-500 to-sky-500 rounded-2xl shadow-lg hover:shadow-2xl transition-all text-left cursor-pointer hover:-translate-y-1"
                 >
-                  <span className="text-xl font-bold text-gray-800">
+                  <span className="text-xl font-bold text-white">
                     Toàn bộ chương
                   </span>
-                  <span className="text-sm text-gray-500 mt-1">
+                  <span className="text-sm text-indigo-100 mt-1">
                     {
                       getQuestionsByChapterAndCourse(course.id, chosenChapter)
                         .length
@@ -140,12 +147,15 @@ export const QuizModeSelector = ({
                     <button
                       key={idx}
                       onClick={() => onStartPractice(chosenChapter, title)}
-                      className="group flex flex-col p-6 bg-white rounded-2xl shadow-lg border border-gray-100 hover:border-blue-500 hover:shadow-2xl transition-all text-left cursor-pointer"
+                      className="group flex flex-col p-5 bg-white/95 rounded-2xl shadow-md border border-transparent hover:border-blue-400 hover:shadow-xl transition-all text-left cursor-pointer hover:-translate-y-1"
                     >
-                      <span className="text-xl font-bold text-gray-800">
+                      <span className="text-sm font-semibold text-blue-600 mb-1">
+                        Chủ đề con
+                      </span>
+                      <span className="text-base font-bold text-slate-600">
                         {title}
                       </span>
-                      <span className="text-sm text-gray-500 mt-1">
+                      <span className="text-xs text-slate-500 mt-2">
                         {count} câu hỏi
                       </span>
                     </button>
@@ -155,21 +165,13 @@ export const QuizModeSelector = ({
             )}
           </div>
 
-          <div className="mt-6 flex gap-3">
-            {chosenChapter !== null && (
+          <div className="mt-6 flex justify-center">
               <button
-                onClick={resetSelection}
+                onClick={() => navigate(-1)}
                 className="px-4 py-2 text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors font-medium cursor-pointer"
               >
-                Quay lại chương
+                Quay lại
               </button>
-            )}
-            <button
-              onClick={onBack}
-              className="flex-1 px-4 py-2 text-gray-600 hover:text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors font-medium cursor-pointer"
-            >
-              Quay lại
-            </button>
           </div>
         </div>
       ) : (
@@ -227,7 +229,7 @@ export const QuizModeSelector = ({
               onClick={onBack}
               className="text-gray-400 hover:text-gray-600 underline font-medium cursor-pointer"
             >
-              Quay lại chọn bộ thi
+              Quay lại chọn chứng chỉ
             </button>
           </div>
         </div>

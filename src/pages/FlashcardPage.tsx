@@ -53,7 +53,7 @@ export default function FlashcardPage() {
           setSelectedChapter(-1); // -1 means all chapters
         }}
         onBack={() => {
-          navigate(`/quiz/${courseId}`);
+          navigate(-1);
         }}
       />
     );

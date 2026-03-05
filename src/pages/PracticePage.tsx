@@ -63,7 +63,7 @@ export default function PracticePage() {
       onSubmitExam={submitExam}
       onBack={() => {
         resetQuiz();
-        navigate(`/quiz/${courseId}`);
+        navigate(-1);
       }}
       onTimeout={() => {
         alert("Hết giờ! Bài thi sẽ tự động nộp.");

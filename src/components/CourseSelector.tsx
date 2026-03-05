@@ -14,10 +14,10 @@ export const CourseSelector = ({
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-50 via-white to-pink-50 p-6">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-indigo-900 mb-2">
-          Chọn Bộ Thi
+          Chọn Certificate
         </h1>
         <p className="text-gray-600">
-          Chọn bộ thi bạn muốn ôn tập hoặc thi thử
+          Chọn certificate bạn muốn ôn tập hoặc thi thử
         </p>
       </div>
 
