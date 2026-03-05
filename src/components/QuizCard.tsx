@@ -7,7 +7,9 @@ interface QuizCardProps {
   data: Question;
   isSubmitted: boolean;
   selectedAnswer?: number | number[];
+  checked?: boolean;
   onAnswer: (ans: number) => void;
+  onCheck?: () => void;
 }
 
 export const QuizCard = ({
@@ -15,10 +17,23 @@ export const QuizCard = ({
   data,
   isSubmitted,
   selectedAnswer,
+  checked,
   onAnswer,
+  onCheck,
 }: QuizCardProps) => {
-  const showExplanation =
-    mode === "practice" ? selectedAnswer !== undefined : isSubmitted;
+  // for practice mode we rely on the parent to tell us when the
+  // current question has been "checked" — this allows the state to
+  // survive navigation.
+  const showExplanation = (() => {
+    if (mode === "practice") {
+      if (data.isMultiSelect) {
+        return !!checked;
+      }
+      return selectedAnswer !== undefined;
+    }
+    return isSubmitted;
+  })();
+
   const getLabel = (i: number) => `${String.fromCharCode(65 + i)}.`;
 
   // Multi-select helpers
@@ -112,6 +127,21 @@ export const QuizCard = ({
             </button>
           );
         })}
+
+        {mode === "practice" &&
+          isMultiSelect &&
+          selectedAnswers.length > 0 &&
+          !showExplanation && (
+            <div className="mt-4 flex justify-center">
+              <button
+                onClick={() => onCheck?.()}
+                className="px-6 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 font-semibold"
+              >
+                Kiểm tra
+              </button>
+            </div>
+          )}
+
         {showExplanation && (
           <div className="mt-8 p-6 bg-blue-50 border-l-4 border-blue-500 rounded-r-2xl shadow-sm animate-in fade-in duration-500">
             <div className="flex items-center gap-2 mb-3 text-blue-800">

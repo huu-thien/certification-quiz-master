@@ -1,6 +1,8 @@
 export interface Question {
   id: string | number;
   chapter: number;
+  /** optional subsection or topic title (used by ISTQB data) */
+  subsectionTitle?: string;
   question: string;
   options: string[];
   correctAnswer?: number; // single-select answer
@@ -30,9 +32,14 @@ export interface QuizState {
   courseId: string;
   currentIdx: number;
   answers: Record<number, number | number[]>; // single or multiple answers
+  // track whether a practice question has been "checked" (user pressed
+  // the Verify button) so we can continue rendering the explanation when
+  // they navigate around
+  checked?: Record<number, boolean>;
   isSubmitted: boolean;
   questions: Question[];
   selectedChapter?: number;
+  selectedSubsection?: string;
 }
 
 export interface Flashcard {

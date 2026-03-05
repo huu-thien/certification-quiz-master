@@ -12,24 +12,35 @@ export const useQuizState = () => {
     courseId: "istqb",
     currentIdx: 0,
     answers: {},
+    checked: {},
     isSubmitted: false,
     questions: [],
     selectedChapter: undefined,
+    selectedSubsection: undefined,
   });
 
-  const startPractice = useCallback((courseId: string, chapterId: number) => {
-    const questions = getQuestionsByChapterAndCourse(courseId, chapterId);
-    setState((prev) => ({
-      ...prev,
-      mode: "practice",
-      courseId,
-      selectedChapter: chapterId,
-      questions,
-      answers: {},
-      currentIdx: 0,
-      isSubmitted: false,
-    }));
-  }, []);
+  const startPractice = useCallback(
+    (courseId: string, chapterId: number, subsectionTitle?: string) => {
+      const questions = getQuestionsByChapterAndCourse(
+        courseId,
+        chapterId,
+        subsectionTitle,
+      );
+      setState((prev) => ({
+        ...prev,
+        mode: "practice",
+        courseId,
+        selectedChapter: chapterId,
+        selectedSubsection: subsectionTitle,
+        questions,
+        answers: {},
+        checked: {},
+        currentIdx: 0,
+        isSubmitted: false,
+      }));
+    },
+    [],
+  );
 
   const startExam = useCallback((courseId: string) => {
     const config = getCourseConfig(courseId);
@@ -81,6 +92,13 @@ export const useQuizState = () => {
           ? [...currentAnswers]
           : [];
 
+        // changing an answer should clear any previous "checked" flag so
+        // the user has to press Kiểm tra again.
+        const newChecked = { ...prev.checked };
+        if (newChecked[prev.currentIdx]) {
+          delete newChecked[prev.currentIdx];
+        }
+
         const idx = answers.indexOf(answer);
         if (idx >= 0) {
           answers.splice(idx, 1); // remove
@@ -99,6 +117,7 @@ export const useQuizState = () => {
         return {
           ...prev,
           answers: newAnswers,
+          checked: newChecked,
         };
       }
 
@@ -134,6 +153,15 @@ export const useQuizState = () => {
   const currentQuestion: Question | null = useMemo(() => {
     return state.questions[state.currentIdx] || null;
   }, [state.questions, state.currentIdx]);
+
+  const checkCurrent = useCallback(() => {
+    setState((prev) => {
+      return {
+        ...prev,
+        checked: { ...prev.checked, [prev.currentIdx]: true },
+      };
+    });
+  }, []);
 
   const score = useMemo(() => {
     return Object.keys(state.answers).filter((k) => {
@@ -174,6 +202,7 @@ export const useQuizState = () => {
     submitExam,
     resetQuiz,
     selectAnswer,
+    checkCurrent,
     goToQuestion,
     goToPrevious,
     goToNext,

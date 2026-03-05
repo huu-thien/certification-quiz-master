@@ -18,7 +18,7 @@ export default function App() {
 
         {/* Practice Mode */}
         <Route
-          path="/quiz/:courseId/practice/:chapterId"
+          path="/quiz/:courseId/practice/:chapterId/:subsection?"
           element={<PracticePage />}
         />
 

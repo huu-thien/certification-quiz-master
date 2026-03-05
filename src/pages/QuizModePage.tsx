@@ -22,8 +22,12 @@ export default function QuizModePage() {
     <QuizModeSelector
       course={course}
       isSelectingChapter={isSelectingChapter}
-      onStartPractice={(chapterId) => {
-        navigate(`/quiz/${courseId}/practice/${chapterId}`);
+      onStartPractice={(chapterId, subsection) => {
+        let path = `/quiz/${courseId}/practice/${chapterId}`;
+        if (subsection) {
+          path += `/${encodeURIComponent(subsection)}`;
+        }
+        navigate(path);
       }}
       onStartExam={() => {
         navigate(`/quiz/${courseId}/exam`);

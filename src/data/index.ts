@@ -14,6 +14,7 @@ export {
   getQuestionsByCourse,
   getQuestionsByChapterAndCourse,
   getAvailableChaptersByCourse,
+  getSubsectionsByChapterAndCourse,
   getRandomExamQuestions,
 } from "./courses";
 

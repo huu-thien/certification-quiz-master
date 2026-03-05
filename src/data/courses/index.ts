@@ -1,5 +1,5 @@
 import type { CourseConfig, Question } from "../../types";
-import { questionsISTQB } from "./istqb/questions";
+import { allQuestions as questionsISTQB } from "./istqb/questions";
 import { questionsPSM1, type QuestionPSM1 } from "./psm1/questions";
 // flashcard data for courses.  we export the arrays below so other
 // modules can import them without needing to know the exact file path.
@@ -36,7 +36,11 @@ export const ISTQB_CHAPTERS: Record<number, string> = {
   6: "Test Tools",
 };
 
-export const ISTQB_QUESTIONS: Question[] = [...questionsISTQB];
+// normalize optional fields coming from the raw ISTQB export
+export const ISTQB_QUESTIONS: Question[] = questionsISTQB.map((q) => ({
+  ...q,
+  options: q.options || [],
+}));
 
 export const istqbConfig: CourseConfig = {
   id: "istqb",
@@ -103,9 +107,13 @@ export const getQuestionsByCourse = (courseId: string): Question[] => {
 export const getQuestionsByChapterAndCourse = (
   courseId: string,
   chapterId: number,
+  subsectionTitle?: string,
 ): Question[] => {
   const questions = getQuestionsByCourse(courseId);
-  const filtered = questions.filter((q) => q.chapter === chapterId);
+  let filtered = questions.filter((q) => q.chapter === chapterId);
+  if (subsectionTitle) {
+    filtered = filtered.filter((q) => q.subsectionTitle === subsectionTitle);
+  }
   return [...filtered].sort(() => Math.random() - 0.5);
 };
 
@@ -114,12 +122,10 @@ export const getAvailableChaptersByCourse = (courseId: string): number[] => {
   const chapters = questions.map((q) => q.chapter);
   const unique = Array.from(new Set(chapters));
 
-  if (courseId === "psm1") {
-    // For PSM1 we want the practice tests to be presented in random order
-    // each time the selector is shown.  Random sort in-place.
-    return unique.sort(() => Math.random() - 0.5);
-  }
-
+  // Sort chapters numerically.  PSM1 practice tests should appear in
+  // sequential order (1‑6) when the user is choosing which practice
+  // test to start.  The question ordering itself remains randomized when
+  // the test begins.
   return unique.sort((a, b) => a - b);
 };
 
@@ -133,4 +139,18 @@ export const getRandomExamQuestions = (
   const examCount = count || config?.examQuestionsCount || 40;
 
   return [...questions].sort(() => Math.random() - 0.5).slice(0, examCount);
+};
+
+// Helper to list subsection titles inside a chapter
+export const getSubsectionsByChapterAndCourse = (
+  courseId: string,
+  chapterId: number,
+): string[] => {
+  const questions = getQuestionsByCourse(courseId);
+  const filtered = questions.filter((q) => q.chapter === chapterId);
+  const unique = Array.from(
+    new Set(filtered.map((q) => q.subsectionTitle).filter(Boolean)),
+  ) as string[];
+  // sort alphabetically so the UI order is predictable
+  return unique.sort((a, b) => a.localeCompare(b));
 };

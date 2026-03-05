@@ -6,9 +6,10 @@ import { getCourseConfig } from "../data";
 
 export default function PracticePage() {
   const navigate = useNavigate();
-  const { courseId, chapterId } = useParams<{
+  const { courseId, chapterId, subsection } = useParams<{
     courseId: string;
     chapterId: string;
+    subsection?: string;
   }>();
 
   const {
@@ -17,6 +18,7 @@ export default function PracticePage() {
     submitExam,
     resetQuiz,
     selectAnswer,
+    checkCurrent,
     goToQuestion,
     goToPrevious,
     goToNext,
@@ -27,13 +29,14 @@ export default function PracticePage() {
   } = useQuizState();
 
   const chapter = parseInt(chapterId || "1");
+  const sub = subsection || undefined;
 
   // Start practice mode on mount
   useEffect(() => {
     if (courseId && state.mode === "idle") {
-      startPractice(courseId, chapter);
+      startPractice(courseId, chapter, sub);
     }
-  }, [courseId, chapter, state.mode, startPractice]);
+  }, [courseId, chapter, sub, state.mode, startPractice]);
 
   const course = courseId ? getCourseConfig(courseId) : null;
 
@@ -56,6 +59,7 @@ export default function PracticePage() {
       onGoToPrevious={goToPrevious}
       onGoToNext={goToNext}
       onSelectAnswer={selectAnswer}
+      onCheck={checkCurrent}
       onSubmitExam={submitExam}
       onBack={() => {
         resetQuiz();

@@ -20,6 +20,7 @@ interface QuizControllerProps {
   onGoToPrevious: () => void;
   onGoToNext: () => void;
   onSelectAnswer: (answer: number) => void;
+  onCheck?: () => void;
   onSubmitExam: () => void;
   onBack: () => void;
   onTimeout: () => void;
@@ -35,6 +36,7 @@ export const QuizController = ({
   onGoToPrevious,
   onGoToNext,
   onSelectAnswer,
+  onCheck,
   onSubmitExam,
   onBack,
   onTimeout,
@@ -51,6 +53,9 @@ export const QuizController = ({
     headerTitle = `Ôn tập ${labelPrefix} ${currentChapter}: ${
       courseConfig.chapters[currentChapter] || "Unknown"
     }`;
+    if (state.selectedSubsection) {
+      headerTitle += ` – ${state.selectedSubsection}`;
+    }
   }
 
   const handleBack = () => {
@@ -153,11 +158,14 @@ export const QuizController = ({
           <div className="flex-1 flex items-center justify-center min-h-0">
             <div className="w-full h-full max-h-[70vh] overflow-hidden">
               <QuizCard
+                key={currentQuestion.id}
                 mode={state.mode}
                 data={currentQuestion}
                 isSubmitted={state.isSubmitted}
                 selectedAnswer={state.answers[state.currentIdx]}
+                checked={state.checked?.[state.currentIdx]}
                 onAnswer={onSelectAnswer}
+                onCheck={onCheck}
               />
             </div>
           </div>
