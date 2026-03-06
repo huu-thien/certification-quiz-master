@@ -75,23 +75,26 @@ export const QuizController = ({
   }
 
   return (
-    <div className="h-screen bg-gray-50 p-4 md:p-8 flex flex-col overflow-hidden">
-      <div className="max-w-6xl mx-auto flex-1 flex flex-col md:flex-row gap-6 overflow-hidden">
+    <div className="h-screen bg-gray-50 p-3 sm:p-4 md:p-6 lg:p-8 flex flex-col overflow-hidden">
+      <div className="max-w-6xl mx-auto flex-1 flex flex-col md:flex-row gap-3 md:gap-6 overflow-hidden">
         {/* Sidebar Left */}
-        <aside className="md:w-64 shrink-0 flex flex-col overflow-hidden">
+        <aside className="md:w-64 shrink-0 flex flex-col overflow-hidden mb-3 md:mb-0">
           <QuestionNavigator
             total={state.questions.length}
             currentIdx={state.currentIdx}
             answers={state.answers}
+            checked={state.checked}
+            results={state.results}
+            mode={state.mode}
             onSelect={onGoToQuestion}
           />
         </aside>
 
         {/* Main Content */}
-        <main className="w-[50vw] flex-1 flex flex-col gap-4 overflow-hidden min-w-0">
+        <main className="w-full md:w-[50vw] flex-1 flex flex-col gap-3 md:gap-4 overflow-hidden min-w-0">
           {/* CONTEXT BAR */}
-          <div className="bg-white px-6 py-3 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div className="bg-white px-3 sm:px-4 md:px-6 py-3 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 md:gap-3 min-w-0">
               <button
                 onClick={handleBack}
                 className="flex items-center gap-2 text-gray-500 hover:text-red-600 transition-colors font-medium hover:bg-red-50 p-2 rounded-lg cursor-pointer"
@@ -108,8 +111,10 @@ export const QuizController = ({
               >
                 <BookOpen size={20} />
               </div>
-              <div>
-                <h1 className="font-bold text-gray-700">{headerTitle}</h1>
+              <div className="min-w-0">
+                <h1 className="font-bold text-gray-700 text-sm sm:text-base md:text-lg truncate">
+                  {headerTitle}
+                </h1>
                 <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold">
                   {state.mode === "exam" ? "Mock Exam Mode" : "Practice Mode"}
                 </p>
@@ -129,7 +134,7 @@ export const QuizController = ({
           </div>
 
           {/* RESULTS SUMMARY */}
-          {state.isSubmitted && (
+          {state.isSubmitted && state.mode === "exam" && (
             <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-100 flex items-center justify-between">
               <div>
                 <h2 className="text-xl font-bold text-gray-800">
@@ -171,41 +176,41 @@ export const QuizController = ({
           </div>
 
           {/* BOTTOM CONTROLS - pinned at bottom */}
-          <div className="flex-shrink-0 flex items-center justify-between gap-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+          <div className="flex-shrink-0 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 bg-white p-3 sm:p-4 rounded-2xl shadow-sm border border-gray-100">
             {/* Previous Button */}
             <button
               disabled={state.currentIdx === 0}
               onClick={onGoToPrevious}
-              className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 disabled:opacity-30 transition-all font-medium cursor-pointer"
+              className="flex items-center justify-center gap-2 w-full sm:flex-1 px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 disabled:opacity-30 transition-all font-medium cursor-pointer text-sm sm:text-base"
             >
               <ArrowLeft size={18} /> Trước
             </button>
 
-            {/* Next or Submit Button */}
-            {state.currentIdx === state.questions.length - 1 &&
-            state.mode === "exam" &&
-            !state.isSubmitted ? (
-              <button
-                onClick={onSubmitExam}
-                disabled={!isAllAnswered}
-                className={`flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl shadow-lg transition-all font-bold cursor-pointer ${
-                  isAllAnswered
-                    ? "bg-green-600 hover:bg-green-700 animate-pulse text-white"
-                    : "bg-gray-300 text-gray-400 cursor-not-allowed"
-                }`}
-              >
-                {isAllAnswered ? "Nộp bài" : "Chưa hoàn thành"}{" "}
-                <Trophy size={18} />
-              </button>
-            ) : (
+            {/* Next / Nộp bài */}
+            <div className="flex w-full sm:flex-1 items-center gap-3">
               <button
                 disabled={state.currentIdx === state.questions.length - 1}
                 onClick={onGoToNext}
-                className="flex items-center justify-center gap-2 flex-1 px-4 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 disabled:opacity-30 transition-all font-bold cursor-pointer"
+                className="flex items-center justify-center gap-2 flex-1 px-4 py-2.5 sm:py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 disabled:opacity-30 transition-all font-bold cursor-pointer text-sm sm:text-base"
               >
                 Sau <ArrowRight size={18} />
               </button>
-            )}
+
+              {state.mode === "exam" && !state.isSubmitted && (
+                <button
+                  onClick={onSubmitExam}
+                  disabled={!isAllAnswered}
+                  className={`flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl shadow-lg transition-all font-bold cursor-pointer text-xs sm:text-sm ${
+                    isAllAnswered
+                      ? "bg-green-600 hover:bg-green-700 animate-pulse text-white"
+                      : "bg-gray-300 text-gray-400 cursor-not-allowed"
+                  }`}
+                >
+                  <span>{isAllAnswered ? "Nộp bài" : "Chưa xong"}</span>
+                  <Trophy size={16} />
+                </button>
+              )}
+            </div>
           </div>
         </main>
       </div>

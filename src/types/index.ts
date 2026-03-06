@@ -36,6 +36,9 @@ export interface QuizState {
   // the Verify button) so we can continue rendering the explanation when
   // they navigate around
   checked?: Record<number, boolean>;
+  // practice mode: store whether a checked question was answered
+  // correctly or incorrectly so the navigator can reflect status
+  results?: Record<number, "correct" | "incorrect">;
   isSubmitted: boolean;
   questions: Question[];
   selectedChapter?: number;

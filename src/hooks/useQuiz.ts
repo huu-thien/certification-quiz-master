@@ -13,6 +13,7 @@ export const useQuizState = () => {
     currentIdx: 0,
     answers: {},
     checked: {},
+    results: {},
     isSubmitted: false,
     questions: [],
     selectedChapter: undefined,
@@ -43,6 +44,7 @@ export const useQuizState = () => {
         questions,
         answers: {},
         checked: {},
+        results: {},
         currentIdx: 0,
         isSubmitted: false,
       }));
@@ -86,6 +88,8 @@ export const useQuizState = () => {
       isSubmitted: false,
       questions: [],
       selectedChapter: undefined,
+      checked: {},
+      results: {},
     }));
   }, []);
 
@@ -105,6 +109,10 @@ export const useQuizState = () => {
         const newChecked = { ...prev.checked };
         if (newChecked[prev.currentIdx]) {
           delete newChecked[prev.currentIdx];
+        }
+        const newResults = { ...(prev.results || {}) };
+        if (newResults[prev.currentIdx] !== undefined) {
+          delete newResults[prev.currentIdx];
         }
 
         const idx = answers.indexOf(answer);
@@ -126,13 +134,25 @@ export const useQuizState = () => {
           ...prev,
           answers: newAnswers,
           checked: newChecked,
+          results: newResults,
         };
       }
 
       // Single-select: set single answer
+      const newChecked = { ...prev.checked };
+      if (newChecked[prev.currentIdx]) {
+        delete newChecked[prev.currentIdx];
+      }
+      const newResults = { ...(prev.results || {}) };
+      if (newResults[prev.currentIdx] !== undefined) {
+        delete newResults[prev.currentIdx];
+      }
+
       return {
         ...prev,
         answers: { ...prev.answers, [prev.currentIdx]: answer },
+        checked: newChecked,
+        results: newResults,
       };
     });
   }, []);
@@ -164,14 +184,51 @@ export const useQuizState = () => {
 
   const checkCurrent = useCallback(() => {
     setState((prev) => {
+      const idx = prev.currentIdx;
+      const question = prev.questions[idx];
+      const userAnswer = prev.answers[idx];
+
+      if (!question || userAnswer === undefined) {
+        return {
+          ...prev,
+          checked: { ...prev.checked, [idx]: true },
+        };
+      }
+
+      let isCorrect = false;
+      if (question.isMultiSelect && question.correctAnswers) {
+        const userAnswers = Array.isArray(userAnswer)
+          ? [...userAnswer].sort((a, b) => a - b)
+          : [];
+        const correctAnswers = [...question.correctAnswers].sort(
+          (a, b) => a - b,
+        );
+        isCorrect =
+          userAnswers.length === correctAnswers.length &&
+          userAnswers.every((ans, i) => ans === correctAnswers[i]);
+      } else {
+        isCorrect = userAnswer === question.correctAnswer;
+      }
+
       return {
         ...prev,
-        checked: { ...prev.checked, [prev.currentIdx]: true },
+        checked: { ...prev.checked, [idx]: true },
+        results: {
+          ...(prev.results || {}),
+          [idx]: isCorrect ? "correct" : "incorrect",
+        },
       };
     });
   }, []);
 
   const score = useMemo(() => {
+    // Practice: use checked results so users must press "Kiểm tra"
+    if (state.mode === "practice") {
+      const results = state.results || {};
+      return Object.values(results).filter((r) => r === "correct").length;
+    }
+
+    // Exam: derive from all answers
     return Object.keys(state.answers).filter((k) => {
       const qIdx = Number(k);
       const question = state.questions[qIdx];
@@ -179,10 +236,9 @@ export const useQuizState = () => {
 
       if (!question) return false;
 
-      // Multi-select comparison
       if (question.isMultiSelect && question.correctAnswers) {
         const userAnswers = Array.isArray(userAnswer)
-          ? userAnswer.sort((a, b) => a - b)
+          ? [...userAnswer].sort((a, b) => a - b)
           : [];
         const correctAnswers = [...question.correctAnswers].sort(
           (a, b) => a - b,
@@ -192,10 +248,9 @@ export const useQuizState = () => {
         return userAnswers.every((ans, i) => ans === correctAnswers[i]);
       }
 
-      // Single-select comparison
       return userAnswer === question.correctAnswer;
     }).length;
-  }, [state.answers, state.questions]);
+  }, [state.mode, state.answers, state.questions, state.results]);
 
   const courseConfig = getCourseConfig(state.courseId);
   const isPassed = courseConfig ? score >= courseConfig.passingScore : false;

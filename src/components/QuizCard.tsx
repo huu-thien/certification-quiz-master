@@ -26,10 +26,7 @@ export const QuizCard = ({
   // survive navigation.
   const showExplanation = (() => {
     if (mode === "practice") {
-      if (data.isMultiSelect) {
-        return !!checked;
-      }
-      return selectedAnswer !== undefined;
+      return !!checked;
     }
     return isSubmitted;
   })();
@@ -52,7 +49,7 @@ export const QuizCard = ({
 
         {isMultiSelect && (
           <p className="text-sm font-medium text-orange-600 bg-orange-50 px-3 py-2 rounded-lg mb-4">
-            ⚠️ Choose all correct answers
+            ⚠️ Chọn tất cả đáp án đúng
           </p>
         )}
 
@@ -128,21 +125,29 @@ export const QuizCard = ({
           );
         })}
 
-        {mode === "practice" &&
-          isMultiSelect &&
-          selectedAnswers.length > 0 &&
-          !showExplanation && (
-            <div className="mt-4 flex justify-center">
-              <button
-                onClick={() => onCheck?.()}
-                className="px-6 py-3 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700 font-semibold"
-              >
-                Kiểm tra
-              </button>
-            </div>
-          )}
+        {mode === "practice" && !showExplanation && (
+          <div className="mt-4 flex justify-center">
+            <button
+              disabled={
+                isMultiSelect
+                  ? selectedAnswers.length === 0
+                  : selectedAnswer === undefined
+              }
+              onClick={() => onCheck?.()}
+              className={`px-6 py-3 rounded-xl shadow font-semibold ${
+                (isMultiSelect
+                  ? selectedAnswers.length === 0
+                  : selectedAnswer === undefined)
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 text-white hover:bg-blue-700"
+              }`}
+            >
+              Kiểm tra
+            </button>
+          </div>
+        )}
 
-        {showExplanation && (
+        {showExplanation && (data.explanationVN || data.explanation) && (
           <div className="mt-8 p-6 bg-blue-50 border-l-4 border-blue-500 rounded-r-2xl shadow-sm animate-in fade-in duration-500">
             <div className="flex items-center gap-2 mb-3 text-blue-800">
               <div className="p-1.5 bg-blue-200 rounded-lg">
@@ -160,7 +165,7 @@ export const QuizCard = ({
               {data.explanationVN || data.explanation}
             </p>
 
-            {/* only show the "Reference (English)" block when we have both
+            {/* only show the "Reference (English)" block when we have both`
                 a Vietnamese explanation *and* an English one, otherwise the
                 fallback above already handles displaying english text. */}
             {data.explanationVN && data.explanation && (
