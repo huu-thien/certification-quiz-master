@@ -22,10 +22,17 @@ export default function QuizModePage() {
     <QuizModeSelector
       course={course}
       isSelectingChapter={isSelectingChapter}
-      onStartPractice={(chapterId, subsection) => {
+      onStartPractice={(chapterId, subsection, count) => {
         let path = `/quiz/${courseId}/practice/${chapterId}`;
         if (subsection) {
           path += `/${encodeURIComponent(subsection)}`;
+        }
+        if (count && count > 0) {
+          const url = new URL(window.location.href);
+          url.pathname = path;
+          url.searchParams.set("count", String(count));
+          navigate(url.pathname + url.search);
+          return;
         }
         navigate(path);
       }}

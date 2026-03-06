@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { QuizController } from "../components/QuizController";
 import { useQuizState } from "../hooks/useQuiz";
@@ -30,13 +30,16 @@ export default function PracticePage() {
 
   const chapter = parseInt(chapterId || "1");
   const sub = subsection || undefined;
+  const [searchParams] = useSearchParams();
+  const countParam = searchParams.get("count");
+  const questionCount = countParam ? parseInt(countParam, 10) || undefined : undefined;
 
   // Start practice mode on mount
   useEffect(() => {
     if (courseId && state.mode === "idle") {
-      startPractice(courseId, chapter, sub);
+      startPractice(courseId, chapter, sub, questionCount);
     }
-  }, [courseId, chapter, sub, state.mode, startPractice]);
+  }, [courseId, chapter, sub, questionCount, state.mode, startPractice]);
 
   const course = courseId ? getCourseConfig(courseId) : null;
 

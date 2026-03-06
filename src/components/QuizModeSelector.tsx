@@ -11,7 +11,11 @@ import { useNavigate } from "react-router-dom";
 interface QuizModeSelectorProps {
   course: CourseConfig;
   isSelectingChapter: boolean;
-  onStartPractice: (chapterId: number, subsectionTitle?: string) => void;
+  onStartPractice: (
+    chapterId: number,
+    subsectionTitle?: string,
+    count?: number,
+  ) => void;
   onStartExam: () => void;
   onStartFlashcard?: (chapterId?: number) => void;
   onBack: () => void;
@@ -65,6 +69,15 @@ export const QuizModeSelector = ({
     subtitle = course.description;
   }
 
+  // Question count selector for practice mode
+  const [questionCount, setQuestionCount] = useState<number | "full">("full");
+
+  const handleStartPractice = (chapterId: number, subsectionTitle?: string) => {
+    const count =
+      questionCount === "full" ? undefined : Number(questionCount || undefined);
+    onStartPractice(chapterId, subsectionTitle, count);
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-indigo-50 via-white to-pink-50 p-8">
       <div className="text-center mb-12 max-w-3xl">
@@ -77,6 +90,34 @@ export const QuizModeSelector = ({
       {isSelectingChapter ? (
         // Practice/Chapter (and possibly subsection) selection screen
         <div className="w-full max-w-2xl">
+          {/* Question count picker */}
+          <div className="mb-4 flex flex-wrap items-center gap-2 justify-center text-sm">
+            <span className="text-slate-600 font-medium">
+              Số câu hỏi muốn ôn:
+            </span>
+            {["10", "20", "40", "60", "full"].map((value) => {
+              const isFull = value === "full";
+              const numeric = isFull ? "full" : Number(value);
+              const isActive = questionCount === numeric;
+              return (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() =>
+                    setQuestionCount(isFull ? "full" : Number(value))
+                  }
+                  className={`px-3 py-1.5 rounded-full border text-xs font-semibold cursor-pointer transition-all ${
+                    isActive
+                      ? "bg-blue-600 text-white border-blue-600"
+                      : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                  }`}
+                >
+                  {isFull ? "Full" : value}
+                </button>
+              );
+            })}
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {chosenChapter === null ? (
               // first show chapter/practice cards
@@ -99,7 +140,7 @@ export const QuizModeSelector = ({
                       if (course.id === "istqb") {
                         setChosenChapter(chapterId);
                       } else {
-                        onStartPractice(chapterId);
+                        handleStartPractice(chapterId);
                       }
                     }}
                     className="group flex flex-col p-6 bg-white/90 rounded-2xl shadow-md border border-transparent hover:border-blue-400 hover:shadow-xl transition-all text-left cursor-pointer hover:-translate-y-1"
@@ -123,7 +164,7 @@ export const QuizModeSelector = ({
               <>
                 <button
                   key="all"
-                  onClick={() => onStartPractice(chosenChapter)}
+                  onClick={() => handleStartPractice(chosenChapter)}
                   className="group flex flex-col p-6 bg-gradient-to-r from-indigo-500 to-sky-500 rounded-2xl shadow-lg hover:shadow-2xl transition-all text-left cursor-pointer hover:-translate-y-1"
                 >
                   <span className="text-xl font-bold text-white">
@@ -146,7 +187,7 @@ export const QuizModeSelector = ({
                   return (
                     <button
                       key={idx}
-                      onClick={() => onStartPractice(chosenChapter, title)}
+                      onClick={() => handleStartPractice(chosenChapter, title)}
                       className="group flex flex-col p-5 bg-white/95 rounded-2xl shadow-md border border-transparent hover:border-blue-400 hover:shadow-xl transition-all text-left cursor-pointer hover:-translate-y-1"
                     >
                       <span className="text-sm font-semibold text-blue-600 mb-1">

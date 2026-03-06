@@ -113,8 +113,8 @@ export const FlashcardReview: React.FC<FlashcardReviewProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-indigo-50 via-white to-pink-50 p-4 sm:p-6">
-      <div className="max-w-5xl mx-auto min-h-[80vh] flex flex-col justify-between gap-4">
+    <div className="h-screen bg-gradient-to-r from-indigo-50 via-white to-pink-50 p-4 sm:p-6 overflow-hidden">
+      <div className="max-w-5xl mx-auto h-full flex flex-col justify-between gap-4">
         {/* Top Bar */}
         <div className="flex items-center justify-between mb-4">
           <button

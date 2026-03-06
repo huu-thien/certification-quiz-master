@@ -20,12 +20,20 @@ export const useQuizState = () => {
   });
 
   const startPractice = useCallback(
-    (courseId: string, chapterId: number, subsectionTitle?: string) => {
-      const questions = getQuestionsByChapterAndCourse(
+    (
+      courseId: string,
+      chapterId: number,
+      subsectionTitle?: string,
+      count?: number,
+    ) => {
+      const allQuestions = getQuestionsByChapterAndCourse(
         courseId,
         chapterId,
         subsectionTitle,
       );
+      const questions =
+        count && count > 0 ? allQuestions.slice(0, count) : allQuestions;
+
       setState((prev) => ({
         ...prev,
         mode: "practice",
