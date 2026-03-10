@@ -5,7 +5,7 @@ export default function NotFoundPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center justify-center bg-[#fafafa]">
+    <div className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center bg-[#fafafa]">
       <div className="absolute top-1/4 -left-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
       <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
 
