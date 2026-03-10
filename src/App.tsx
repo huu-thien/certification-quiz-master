@@ -5,31 +5,42 @@ import PracticePage from "./pages/PracticePage.tsx";
 import ExamPage from "./pages/ExamPage.tsx";
 import FlashcardPage from "./pages/FlashcardPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
+import { useState } from "react";
+import DonateModal from "./components/DonateModal.tsx";
 
 export default function App() {
+  const [showDonate, setShowDonate] = useState(false);
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Home - Select Course */}
-        <Route path="/" element={<HomePage />} />
+    <>
+      <BrowserRouter>
+        <Routes>
+          {/* Home - Select Course */}
+          <Route path="/" element={<HomePage />} />
 
-        {/* Quiz Mode Selection */}
-        <Route path="/quiz/:courseId" element={<QuizModePage />} />
+          {/* Quiz Mode Selection */}
+          <Route path="/quiz/:courseId" element={<QuizModePage />} />
 
-        {/* Practice Mode */}
-        <Route
-          path="/quiz/:courseId/practice/:chapterId/:subsection?"
-          element={<PracticePage />}
-        />
+          {/* Practice Mode */}
+          <Route
+            path="/quiz/:courseId/practice/:chapterId/:subsection?"
+            element={<PracticePage />}
+          />
 
-        {/* Exam Mode */}
-        <Route path="/quiz/:courseId/exam" element={<ExamPage />} />
+          {/* Exam Mode */}
+          <Route path="/quiz/:courseId/exam" element={<ExamPage />} />
 
-        {/* Flashcard Mode */}
-        <Route path="/flashcard/:courseId" element={<FlashcardPage />} />
-        {/* Catch‑all 404 */}
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
+          {/* Flashcard Mode */}
+          <Route path="/flashcard/:courseId" element={<FlashcardPage />} />
+          {/* Catch‑all 404 */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+      <button className="donate-btn" onClick={() => setShowDonate(true)}>
+        <span style={{ fontSize: "1rem" }}>💖</span>
+        Ủng hộ tác giả
+      </button>
+
+      {showDonate && <DonateModal onClose={() => setShowDonate(false)} />}
+    </>
   );
 }
