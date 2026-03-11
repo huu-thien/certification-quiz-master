@@ -1,6 +1,6 @@
-// server.cjs — Local dev proxy use Groq (free, no billing)
-// npm install express cors dotenv node-fetch@2
-// Run: node server.cjs
+// server.cjs — Local dev proxy dùng Groq (free, không cần billing)
+// Cài:  npm install express cors dotenv node-fetch@2
+// Chạy: node server.cjs
 
 require("dotenv").config();
 
@@ -17,7 +17,7 @@ if (!API_KEY) {
   console.error("❌ GROQ_API_KEY chưa được set trong file .env!");
   process.exit(1);
 } else {
-  console.log("✅ GROQ_API_KEY loaded");
+  console.log("✅ GROQ_API_KEY loaded:", API_KEY.slice(0, 8) + "...");
 }
 
 app.post("/api/explain", async (req, res) => {
@@ -29,29 +29,39 @@ app.post("/api/explain", async (req, res) => {
       return res.status(400).json({ error: "Missing question or options" });
     }
 
-    const correctIdx = isMultiSelect ? correctAnswers : [correctAnswer];
-    const optionLabels = ["A", "B", "C", "D", "E"];
+    // Sanitize: xóa control characters gây lỗi JSON parse
+    const sanitize = (s) => s.replace(/[\x00-\x1F\x7F]/g, " ").trim();
+    const cleanQuestion = sanitize(question);
+    const cleanOptions = options.map(sanitize);
 
-    const optionLines = options
+    const correctIdx = isMultiSelect ? correctAnswers : [correctAnswer];
+    const optionLabels = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+    const optionLines = cleanOptions
       .map((opt, i) => `${optionLabels[i]}. ${opt}`)
       .join("\n");
 
     const correctLines = correctIdx
-      .map((i) => `${optionLabels[i]}. ${options[i]}`)
+      .map((i) => `${optionLabels[i]}. ${cleanOptions[i]}`)
       .join(", ");
+
+    const optionCount = cleanOptions.length;
+    const optionPlaceholders = cleanOptions.map((_, i) => `"<dịch đáp án ${optionLabels[i]}>"`).join(", ");
 
     const prompt = `Bạn là chuyên gia ISTQB. Hãy trả lời theo đúng định dạng JSON sau, không thêm bất kỳ text nào ngoài JSON:
 
 {
   "questionVN": "<dịch câu hỏi sang tiếng Việt tự nhiên>",
-  "optionsVN": ["<dịch đáp án A>", "<dịch đáp án B>", "<dịch đáp án C>", "<dịch đáp án D>"],
+   "optionsVN": [${optionPlaceholders}],
   "explanation": "<Giải thích rõ lý do trong 2-3 câu. Sau đó giải thích ngắn gọn tại sao từng đáp án còn lại sai, mỗi đáp án 1 câu. Dùng tiếng Việt tự nhiên.>"
 }
 
-Câu hỏi gốc (tiếng Anh):
-${question}
+QUAN TRỌNG: mảng optionsVN phải có đúng ${optionCount} phần tử tương ứng với ${optionCount} đáp án bên dưới.
 
-Các đáp án:
+Câu hỏi gốc (tiếng Anh):
+${cleanQuestion}
+
+Các đáp án (${optionCount} đáp án):
 ${optionLines}
 
 Đáp án đúng: ${correctLines}`;
@@ -86,7 +96,19 @@ ${optionLines}
       return res.status(502).json({ error: "Invalid JSON response" });
     }
 
-    const parsed = JSON.parse(jsonMatch[0]);
+    // Sanitize response: thay newline thật bên trong JSON string thành \n escaped
+    const safeJson = jsonMatch[0].replace(
+      /"((?:[^"\\]|\\.)*)"/g,
+      (match, inner) => '"' + inner.replace(/\n/g, "\\n").replace(/\r/g, "").replace(/\t/g, " ") + '"'
+    );
+
+    let parsed;
+    try {
+      parsed = JSON.parse(safeJson);
+    } catch (e) {
+      console.error("❌ Cannot parse JSON from Groq:", raw);
+      return res.status(502).json({ error: "Invalid JSON response" });
+    }
     console.log("✅ Explanation generated for:", question.slice(0, 50) + "...");
     return res.status(200).json({
       questionVN: parsed.questionVN ?? "",

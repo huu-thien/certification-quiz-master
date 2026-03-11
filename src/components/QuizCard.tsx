@@ -52,10 +52,11 @@ async function fetchExplanation(question: Question): Promise<AIResult> {
 // Module-level cache — tồn tại suốt session, không bị React StrictMode reset
 const explanationCache = new Map<string, AIResult>();
 
-// ─── ExplanationPanel ──────────────────────────────────────────────────────
-type FetchState = "idle" | "loading" | "success" | "error";
+const MAX_RETRIES = 3;
+const optionLabels = ["A", "B", "C", "D", "E", "F", "G", "H"];
 
-const optionLabels = ["A", "B", "C", "D", "E"];
+// ─── ExplanationPanel ──────────────────────────────────────────────────────
+type FetchState = "idle" | "loading" | "success" | "error" | "fallback";
 
 const ExplanationPanel = ({ data }: { data: Question }) => {
   const hasStatic = !!(data.explanationVN || data.explanation);
@@ -67,52 +68,60 @@ const ExplanationPanel = ({ data }: { data: Question }) => {
     explanationCache.has(data.id.toString()) ? "success" : "idle",
   );
   const isFetching = useRef(false);
+  const retryCount = useRef(0);
 
   // Reset khi chuyển câu hỏi
   useEffect(() => {
     const cached = explanationCache.get(data.id.toString());
     if (cached) {
-      setTimeout(() => setAiResult(cached), 0);
-      setTimeout(() => setState("success"), 0);
+      setAiResult(cached);
+      setState("success");
     } else {
-      setTimeout(() => setAiResult(null), 0);
-      setTimeout(() => setState("idle"), 0);
+      setAiResult(null);
+      setState("idle");
     }
     isFetching.current = false;
+    retryCount.current = 0;
   }, [data.id]);
 
-  // Auto-fetch nếu không có giải thích tĩnh
-  useEffect(() => {
-    if (hasStatic) return;
-    if (explanationCache.has(data.id.toString())) return;
-    if (isFetching.current) return;
-    isFetching.current = true;
-    setTimeout(() => setState("loading"), 0);
-    fetchExplanation(data)
-      .then((result) => {
-        explanationCache.set(data.id.toString(), result);
-        setAiResult(result);
-        setState("success");
-      })
-      .catch(() => {
-        setState("error");
-        isFetching.current = false;
-      });
-  }, [hasStatic, data]);
-
-  const retry = () => {
+  // Hàm fetch với auto-retry
+  const doFetch = (question: Question) => {
     isFetching.current = true;
     setState("loading");
-    fetchExplanation(data)
+
+    fetchExplanation(question)
       .then((result) => {
-        explanationCache.set(data.id.toString(), result);
+        explanationCache.set(question.id.toString(), result);
         setAiResult(result);
         setState("success");
+        isFetching.current = false;
       })
       .catch(() => {
-        setState("error");
-        isFetching.current = false;
+        retryCount.current += 1;
+
+        if (retryCount.current < MAX_RETRIES) {
+          // Thử lại sau 1.5s
+          setTimeout(() => doFetch(question), 1500);
+        } else {
+          // Đã thử 3 lần — fallback sang giải thích tĩnh nếu có
+          isFetching.current = false;
+          setState(hasStatic ? "fallback" : "error");
+        }
       });
+  };
+
+  // Auto-fetch khi panel mở
+  useEffect(() => {
+    if (explanationCache.has(data.id.toString())) return;
+    if (isFetching.current) return;
+    doFetch(data);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.id]);
+
+  // Retry thủ công (reset counter)
+  const retry = () => {
+    retryCount.current = 0;
+    doFetch(data);
   };
 
   const correctIdxs: number[] = data.isMultiSelect
@@ -123,126 +132,134 @@ const ExplanationPanel = ({ data }: { data: Question }) => {
 
   return (
     <div className="mt-6 rounded-2xl overflow-hidden border border-blue-200 shadow-sm">
-      {/* ── Giải thích tĩnh ── */}
-      {hasStatic && (
-        <div className="p-6 bg-blue-50">
-          <div className="flex items-center gap-2 mb-3 text-blue-800">
-            <div className="p-1.5 bg-blue-200 rounded-lg">
-              <Lightbulb size={16} />
-            </div>
-            <h3 className="font-bold uppercase tracking-wider text-xs">
-              Giải thích
-            </h3>
-          </div>
-          <p className="text-gray-700 leading-relaxed font-medium text-base">
-            {data.explanationVN || data.explanation}
-          </p>
-          {data.explanationVN && data.explanation && (
-            <div className="mt-4 pt-4 border-t border-blue-200">
-              <p className="text-xs text-blue-500 font-bold uppercase mb-1">
-                Reference (English)
-              </p>
-              <p className="text-blue-700 italic text-sm leading-relaxed">
-                {data.explanation}
-              </p>
-            </div>
-          )}
+
+      {/* Loading */}
+      {state === "loading" && (
+        <div className="p-6 bg-blue-50 flex items-center gap-3 text-blue-600">
+          <Loader2 className="w-5 h-5 animate-spin shrink-0" />
+          <span className="text-sm font-medium">
+            Đang dịch và phân tích…
+            {retryCount.current > 0 && (
+              <span className="ml-1 text-blue-400">
+                (thử lần {retryCount.current + 1}/{MAX_RETRIES})
+              </span>
+            )}
+          </span>
         </div>
       )}
 
-      {/* ── AI fallback ── */}
-      {!hasStatic && (
+      {/* Error — hết retry, không có fallback */}
+      {state === "error" && (
+        <div className="p-6 bg-red-50 flex items-start gap-3 text-red-600">
+          <XCircle className="w-5 h-5 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-medium">
+              Không thể tải giải thích sau {MAX_RETRIES} lần thử.
+            </p>
+            <button
+              onClick={retry}
+              className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              <RefreshCw className="w-4 h-4" /> Thử lại
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Fallback — hết retry, dùng giải thích tĩnh */}
+      {state === "fallback" && hasStatic && (
+        <div className="p-5 bg-amber-50 border-b border-amber-100">
+          <div className="flex items-center gap-2 mb-3 text-amber-700">
+            <Lightbulb size={15} />
+            <span className="text-xs font-bold uppercase tracking-wider">Giải thích</span>
+            <span className="ml-auto text-xs text-amber-500 font-medium">
+              AI không khả dụng · dùng bản tĩnh
+            </span>
+            <button
+              onClick={retry}
+              className="inline-flex items-center gap-1 text-xs font-semibold text-blue-500 hover:text-blue-700 transition-colors"
+            >
+              <RefreshCw className="w-3 h-3" /> Thử lại AI
+            </button>
+          </div>
+          <p className="text-gray-700 leading-relaxed text-sm font-medium">
+            {data.explanationVN || data.explanation}
+          </p>
+        </div>
+      )}
+
+      {/* Success — AI result */}
+      {state === "success" && aiResult && (
         <>
-          {/* Loading */}
-          {state === "loading" && (
-            <div className="p-6 bg-blue-50 flex items-center gap-3 text-blue-600">
-              <Loader2 className="w-5 h-5 animate-spin shrink-0" />
-              <span className="text-sm font-medium">
-                Đang dịch và phân tích…
+          {/* Section 1: Dịch nghĩa */}
+          <div className="p-5 bg-indigo-50 border-b border-indigo-100">
+            <div className="flex items-center gap-2 mb-3 text-indigo-700">
+              <Languages size={15} />
+              <span className="text-xs font-bold uppercase tracking-wider">Dịch nghĩa</span>
+              <span className="ml-auto inline-flex items-center gap-1 text-xs font-semibold bg-indigo-200 text-indigo-700 px-2 py-0.5 rounded-full">
+                <Sparkles size={10} /> AI · Groq
               </span>
             </div>
-          )}
 
-          {/* Error */}
-          {state === "error" && (
-            <div className="p-6 bg-red-50 flex items-start gap-3 text-red-600">
-              <XCircle className="w-5 h-5 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium">
-                  Không thể tải giải thích. Kiểm tra kết nối và thử lại.
-                </p>
-                <button
-                  onClick={retry}
-                  className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors"
-                >
-                  <RefreshCw className="w-4 h-4" /> Thử lại
-                </button>
-              </div>
+            {/* Câu hỏi dịch */}
+            <p className="text-indigo-900 font-semibold text-sm mb-3">
+              ❓ {aiResult.questionVN}
+            </p>
+
+            {/* Đáp án dịch */}
+            <div className="space-y-1.5">
+              {aiResult.optionsVN.map((opt, i) => {
+                const isCorrect = correctIdxs.includes(i);
+                return (
+                  <div
+                    key={i}
+                    className={`flex items-start gap-2 text-sm px-3 py-2 rounded-lg ${
+                      isCorrect
+                        ? "bg-green-100 text-green-800 font-semibold"
+                        : "bg-white/70 text-gray-600"
+                    }`}
+                  >
+                    <span className={`shrink-0 font-bold w-5 ${isCorrect ? "text-green-600" : "text-gray-400"}`}>
+                      {optionLabels[i]}.
+                    </span>
+                    <span>{opt}</span>
+                    {isCorrect && (
+                      <CheckCircle2 className="w-4 h-4 shrink-0 ml-auto text-green-500 mt-0.5" />
+                    )}
+                  </div>
+                );
+              })}
             </div>
-          )}
+          </div>
 
-          {/* Success */}
-          {state === "success" && aiResult && (
-            <>
-              {/* Section 1: Dịch nghĩa */}
-              <div className="p-5 bg-indigo-50 border-b border-indigo-100">
-                <div className="flex items-center gap-2 mb-3 text-indigo-700">
-                  <Languages size={15} />
-                  <span className="text-xs font-bold uppercase tracking-wider">
-                    Dịch nghĩa
-                  </span>
-                  <span className="ml-auto inline-flex items-center gap-1 text-xs font-semibold bg-indigo-200 text-indigo-700 px-2 py-0.5 rounded-full">
-                    <Sparkles size={10} /> AI · Groq
-                  </span>
-                </div>
-
-                {/* Câu hỏi dịch */}
-                <p className="text-indigo-900 font-semibold text-sm mb-3">
-                  ❓ {aiResult.questionVN}
-                </p>
-
-                {/* Đáp án dịch */}
-                <div className="space-y-1.5">
-                  {aiResult.optionsVN.map((opt, i) => {
-                    const isCorrect = correctIdxs.includes(i);
-                    return (
-                      <div
-                        key={i}
-                        className={`flex items-start gap-2 text-sm px-3 py-2 rounded-lg ${
-                          isCorrect
-                            ? "bg-green-100 text-green-800 font-semibold"
-                            : "bg-white/70 text-gray-600"
-                        }`}
-                      >
-                        <span
-                          className={`shrink-0 font-bold w-5 ${isCorrect ? "text-green-600" : "text-gray-400"}`}
-                        >
-                          {optionLabels[i]}.
-                        </span>
-                        <span>{opt}</span>
-                        {isCorrect && (
-                          <CheckCircle2 className="w-4 h-4 shrink-0 ml-auto text-green-500 mt-0.5" />
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Section 2: Giải thích */}
-              <div className="p-5 bg-blue-50">
-                <div className="flex items-center gap-2 mb-3 text-blue-700">
-                  <Lightbulb size={15} />
-                  <span className="text-xs font-bold uppercase tracking-wider">
-                    Giải thích
-                  </span>
-                </div>
-                <p className="text-gray-700 leading-relaxed text-sm font-medium">
-                  {aiResult.explanation}
-                </p>
-              </div>
-            </>
-          )}
+          {/* Section 2: Giải thích */}
+          <div className="p-5 bg-blue-50">
+            <div className="flex items-center gap-2 mb-3 text-blue-700">
+              <Lightbulb size={15} />
+              <span className="text-xs font-bold uppercase tracking-wider">Giải thích</span>
+            </div>
+            <div className="space-y-2">
+              {aiResult.explanation
+                .split(/(?<=[.!?])\s*(?=Đáp án|$)/)
+                .map((s) => s.trim())
+                .filter(Boolean)
+                .map((sentence, idx) => (
+                  <p
+                    key={idx}
+                    className={`text-sm leading-relaxed ${
+                      idx === 0
+                        ? "text-gray-800 font-semibold"
+                        : "text-gray-600 font-medium"
+                    }`}
+                  >
+                    {idx > 0 && (
+                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-400 mr-2 mb-0.5 align-middle" />
+                    )}
+                    {sentence}
+                  </p>
+                ))}
+            </div>
+          </div>
         </>
       )}
     </div>
@@ -270,9 +287,7 @@ export const QuizCard = ({
   return (
     <div className="w-full h-full bg-white rounded-2xl shadow-xl p-8 border border-gray-100 flex flex-col">
       <div className="flex-1 space-y-3 overflow-y-auto custom-scrollbar pr-2">
-        <h2 className="text-xl font-bold text-gray-700 mb-6">
-          {data.question}
-        </h2>
+        <h2 className="text-xl font-bold text-gray-700 mb-6">{data.question}</h2>
 
         {isMultiSelect && (
           <p className="text-sm font-medium text-orange-600 bg-orange-50 px-3 py-2 rounded-lg mb-4">
@@ -292,10 +307,8 @@ export const QuizCard = ({
             "w-full p-4 rounded-xl border-2 text-left transition-all flex items-center gap-3 font-medium cursor-pointer";
 
           if (showExplanation) {
-            if (isCorrect)
-              baseClass += " border-green-500 bg-green-50 text-green-800";
-            else if (isSelected && !isCorrect)
-              baseClass += " border-red-500 bg-red-50 text-red-800";
+            if (isCorrect) baseClass += " border-green-500 bg-green-50 text-green-800";
+            else if (isSelected && !isCorrect) baseClass += " border-red-500 bg-red-50 text-red-800";
             else baseClass += " border-gray-200 opacity-50 text-gray-500";
           } else {
             baseClass += isSelected
@@ -305,30 +318,20 @@ export const QuizCard = ({
 
           const renderIcon = () => {
             if (showExplanation) {
-              if (isCorrect)
-                return (
-                  <CheckCircle2 className="w-6 h-6 shrink-0 text-green-600" />
-                );
-              if (isSelected && !isCorrect)
-                return <XCircle className="w-6 h-6 shrink-0 text-red-600" />;
+              if (isCorrect) return <CheckCircle2 className="w-6 h-6 shrink-0 text-green-600" />;
+              if (isSelected && !isCorrect) return <XCircle className="w-6 h-6 shrink-0 text-red-600" />;
             }
             if (isMultiSelect) {
               return (
-                <div
-                  className={`w-6 h-6 shrink-0 border-2 rounded flex items-center justify-center ${
-                    isSelected
-                      ? "border-blue-600 bg-blue-600"
-                      : "border-gray-300 bg-white"
-                  }`}
-                >
+                <div className={`w-6 h-6 shrink-0 border-2 rounded flex items-center justify-center ${
+                  isSelected ? "border-blue-600 bg-blue-600" : "border-gray-300 bg-white"
+                }`}>
                   {isSelected && <Check className="w-4 h-4 text-white" />}
                 </div>
               );
             }
             return (
-              <Circle
-                className={`w-6 h-6 shrink-0 ${isSelected ? "text-blue-600" : "text-gray-300"}`}
-              />
+              <Circle className={`w-6 h-6 shrink-0 ${isSelected ? "text-blue-600" : "text-gray-300"}`} />
             );
           };
 
@@ -349,18 +352,10 @@ export const QuizCard = ({
         {mode === "practice" && !showExplanation && (
           <div className="mt-4 flex justify-center">
             <button
-              disabled={
-                isMultiSelect
-                  ? selectedAnswers.length === 0
-                  : selectedAnswer === undefined
-              }
+              disabled={isMultiSelect ? selectedAnswers.length === 0 : selectedAnswer === undefined}
               onClick={() => onCheck?.()}
               className={`px-6 py-3 rounded-xl shadow font-semibold ${
-                (
-                  isMultiSelect
-                    ? selectedAnswers.length === 0
-                    : selectedAnswer === undefined
-                )
+                (isMultiSelect ? selectedAnswers.length === 0 : selectedAnswer === undefined)
                   ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                   : "bg-blue-600 text-white hover:bg-blue-700"
               }`}
