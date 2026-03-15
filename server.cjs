@@ -53,7 +53,7 @@ app.post("/api/explain", async (req, res) => {
 {
   "questionVN": "<dịch câu hỏi sang tiếng Việt tự nhiên>",
    "optionsVN": [${optionPlaceholders}],
-  "explanation": "<Giải thích rõ lý do trong 2-3 câu. Sau đó giải thích ngắn gọn tại sao từng đáp án còn lại sai, mỗi đáp án 1 câu. Dùng tiếng Việt tự nhiên.>"
+  "explanation": "<Giải thích rõ lý do đáp án X đúng trong 3-4 câu. Sau đó giải thích ngắn gọn tại sao từng đáp án còn lại sai, mỗi đáp án 1 câu, bắt đầu bằng 'Đáp án Y sai vì...'. Dùng tiếng Việt tự nhiên, KHÔNG viết dính các câu lại với nhau.>"
 }
 
 QUAN TRỌNG: mảng optionsVN phải có đúng ${optionCount} phần tử tương ứng với ${optionCount} đáp án bên dưới.
