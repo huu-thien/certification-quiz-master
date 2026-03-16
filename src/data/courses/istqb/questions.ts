@@ -22711,7 +22711,7 @@ export const ch4_whiteBoxTestTechniques: Question[] = [
       "The ratio of the total number of test cases executed to the total number of branches in the code",
       "The ratio of the total number of executed branches to the total number of branches in the code",
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
   },
   {
     id: "c34103fc-03f5-43a5-96cf-1818348792ce",
@@ -22724,7 +22724,7 @@ export const ch4_whiteBoxTestTechniques: Question[] = [
       "P = number of executable statements executed by the test cases<p>Q = total number of executable statements in the code",
       "P = number of branches executed by the test cases<p>Q = total number of branches in the code",
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
   },
   {
     id: "4d938730-4824-4661-a7af-1cf8dec1afea",
